@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block pagetitle %} Freelance Web Developer - Portfolio{% endblock %}
+
+{% block pov %}
+    <div class="pov">
+        <div class="wrapper">       
+            <div id="cycle">            
+                <div>
+                    <img src="/static/images/slideshow/jdbirthday_thumb.jpg" alt="" />
+                    <article>
+                        <h2>Jack Daniel's Birthday <small>in collaboration with <a href="http://idea-loop.com/" target="blank">Idealoop</a></small></h2>
+                        <p><strong>My Involvement:</strong> Mobile HTML, CSS Template Development</p>
+                        <p><strong>URL:</strong> <a href="http://joinjacksparry.com/" target="blank">View Site</a></p>
+                    </article>
+                </div>            
+                <div>
+                    <img src="/static/images/slideshow/jackrocks_thumb.jpg" alt="" />
+                    <article>
+                        <h2>Jack Rocks <small>in collaboration with <a href="http://idea-loop.com/" target="blank">Idealoop</a></small></h2>
+                        <p><strong>My Involvement:</strong> Umbraco CMS integration, HTML/CSS customization</p>
+                        <p><strong>URL:</strong> <a href="http://jackrocks.jp/" target="blank">View Site</a></p>
+                    </article>
+                </div>
+                <div>
+                    <img src="/static/images/slideshow/dso_thumb.jpg" alt="" />
+                    <article>
+                        <h2>Dallas Symphony Orchestra <small>in collaboration with <a href="http://idea-loop.com/" target="blank">Idealoop</a></small></h2>
+                        <p><strong>My Involvement:</strong> HTML/CSS/Javascript Conversion</p>
+                        <p><strong>URL:</strong> <a href="http://dallassymphony.com/" target="blank">View Site</a></p>
+                    </article>
+                </div>
+            </div>            
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="col">
+        <h2>About Me</h2>
+        <p>I am a passionate developer who enjoys working with CSS, HTML, Javascript, Django, and etc.</p>
+        <p>I am proficient in HTML5, CSS3, Javascript (jQuery), Python, Django, ASP.Net, Wordpress, Umbraco. I specialize in .PSD to HTML Conversion.</p>
+        
+        <h2>Connect with me</h2>
+        <ul class="social">
+            <li><a href="http://gplus.to/annavester" title="Connect on Google+" target="_blank"><img src="/static/images/icons/google_plus_32.png" alt="google+" /></a></li>
+            <li><a href="http://twitter.com/annavester" title="Connect on Twitter" target="_blank"><img src="/static/images/icons/twitter_32.png" alt="twitter" /></a></li>    
+            <li><a href="http://www.google.com/reader/shared/00929608817985280115" title="Connect on Google Reader" target="_blank"><img src="/static/images/icons/google_32.png" alt="googlereader" /></a></li>        
+            <li><a href="http://www.linkedin.com/in/annavester" title="Connect on Linkedin" target="_blank"><img src="/static/images/icons/linkedin_32.png" alt="linkedin" /></a></li>
+            <li><a href="http://www.diigo.com/user/annavester" title="Connect on Diigo"><img src="/static/images/icons/diigo_32.png" alt="diigo" /></a></li>
+            <li><a href="http://forrst.me/annavester" title="Connect on Forrst"><img src="/static/images/icons/forrst_32.png" alt="forrst" /></a></li>
+            <li><a href="http://blog.annavester.com/feed/" title="Subscribe to RSS feed"><img src="/static/images/icons/rss_32.png" alt="rss feed" /></a></li>
+        </ul>
+        <div class="clr"></div>
+    </div>
+    
+    
+    {% if tweets %}
+        <div class="col">            
+            <h2>My Tweets</h2>
+            <ul class="tweets">        
+                {% for tweet in tweets %}
+                    <li><a href="http://api.twitter.com/annavester/status/{{tweet.id_str}}" target="_blank">{{tweet.text}}</a></li>
+                {% endfor %}        
+            </ul>
+        </div>
+    {% endif %}
+    
+    {% if reading_books %}
+        <div class="col">
+            <h2>What I Am Reading Now</h2>
+            <ul>
+            {% for book in reading_books %}
+                <li><a href="{% url view_book book.id %}">{{book.title}} :: {{book.category.name}}</a></li>                     
+            {% endfor %}
+            </ul>     
+        </div>        
+    {% endif %}
+    
+    <div class="col decor">
+    	<h2>My Favorite websites</h2>
+    	<ul>
+    		<li><a href="http://smashingmagazine.com" target="_blank">Smashing Magazine</a></li>
+    		<li><a href="http://amazon.com" target="_blank">Amazon.com</a></li>
+    		<li><a href="http://www.alistapart.com/" target="_blank">A List Apart</a></li>
+    		<li><a href="http://www.boston.com/bigpicture/" target="_blank">Big Picture</a></li>
+    		<li><a href="http://www.snipplr.com/" target="_blank">Snipplr</a></li>
+    	</ul>	
+	</div>
+    
+    <div class="col decor">
+    	<script type="text/javascript" src="http://www.google.com/reader/ui/publisher-en.js"></script>
+		<script type="text/javascript" src="http://www.google.com/reader/public/javascript/user/00929608817985280115/state/com.google/broadcast?n=5&callback=GRC_p(%7Bc%3A%22-%22%2Ct%3A%22My%20Shared%20Items%22%2Cs%3A%22false%22%2Cn%3A%22true%22%2Cb%3A%22false%22%7D)%3Bnew%20GRC"></script>
+    </div>
+    
+    {% if finished_books %}
+        <div class="col decor">
+            <h2>What I Just Read</h2>
+            <ul>
+            {% for book in finished_books %}
+                <li><a href="{% url view_book book.id %}">{{book.title}} :: {{book.category.name}}</a></li>                     
+            {% endfor %}
+            </ul>     
+        </div>        
+    {% endif %}    
+{% endblock %}
+
+{% block external %}
+    <script src="/static/scripts/cycle.js"></script>
+    <script> 
+    	function adjustHeight() {	
+    		var elTallest = findTallest('.col'); 
+    		         
+            $('.col').each(function (index) {
+            	$(this).height(elTallest);
+            });  	    		
+    	}
+        $(function(){
+           $('#cycle').after('<div id="nav">').cycle({speed:2000,pager:'#nav',pause:1});           
+           adjustHeight();
+            
+        });
+        $(window).smartresize(function(){  
+        	$('.col').each(function (index) {
+        		$(this).css("height", "auto");
+        	});
+		  	adjustHeight();
+		});
+    </script>
+    <script defer="defer">
+        $(function(){
+           $('.reader-publisher-module a').attr('target','_blank');
+        });
+    </script>
+{% endblock %}

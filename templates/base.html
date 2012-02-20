@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>{% block pagetitle %} {% endblock %} - Anna Vester</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+        <meta name="description" content="Anna Vester, freelance web developer based in Northwest Arkansas, USA"  />
+        <meta name="keywords" content="freelance front end web developer north west arkansas, front end developer nwa, front end web developer, freelance web developer arkansas, north west arkansas" />
+        <meta name="robots" content="all"/>
+        <meta name="viewport" content="width=device-width" />
+        <meta name="y_key" content="aa9d4d666ed2a840" />
+        <!--
+            Hello there! 
+            If you have any questions regarding the code, or feedback, please send me an email at me@annavester.com. Don't be shy.
+            Bye!        
+        -->
+
+        <!--[if lt IE 9]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+            <script src="/static/scripts/selectivizr-min.js"></script>
+        <![endif]-->
+
+        <link href="/static/s.css" rel="stylesheet" type="text/css" />      
+        <link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css' />  
+        <script src="/static/scripts/jquery.js"></script>
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-12515472-3']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        
+        </script>
+    </head>
+    <body id="home">
+        <div id="page"> 
+            <header>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="http://blog.annavester.com">My Blog</a></li>
+                        <li><a href="{% url books %}">My Books</a>
+                            <ul>
+                                <li><a href="{% url books %}">books</a></li>
+                                {% if user.is_authenticated %}
+                                <li><a href="{% url add_book %}">add book</a></li>
+                                {% endif %}
+                                <li><a href="{% url authors %}">authors</a></li>
+                                {% if user.is_authenticated %}
+                                <li><a href="{% url add_author %}">add author</a></li>
+                                {% endif %}
+                                <li><a href="{% url reading_lists %}">lists</a></li>
+                                {% if user.is_authenticated %}
+                                <li><a href="{% url add_reading_list %}">add list</a></li>
+                                {% endif %}
+                            </ul>                            
+                        </li>
+                        <li><a href="http://blog.annavester.com/contact-me/">Contact Me</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="/logout/">Logout</a></li>
+                        {% else %}
+                            <li><a href="/login/">Login</a></li>
+                        {% endif %}
+                    </ul>
+                    <a href="/" class="tagline">Anna Vester - Freelance Web Developer</a>
+                </nav>
+            </header>    
+            
+            {% block pov %} {% endblock %}         
+            
+            <section id="body" class="group">
+                {% block content %} {% endblock %}
+            </section> 
+            <div class="push"></div>           
+        </div>
+        
+        <footer>
+            <p>design and development by <a href="http://annavester.com">Anna Vester</a></p>
+        </footer>
+        
+        <script src="/static/scripts/jquery.simplemodal.1.4.1.min.js"></script>        
+        <script src="/static/scripts/scripts.js"></script>
+        <script>
+            $(document).ready(function() {               
+                $('#search-form').submit(function() {
+                    search_submit();
+                });
+                $('#search-results .modal-close').click(function() {
+                    $(this).next().empty();
+                    $(this).parent().hide();
+                    return false;
+                }); 
+            });
+        </script>
+        {% block external %} {% endblock %}
+    </body>
+</html>
