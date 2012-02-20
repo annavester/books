@@ -39,7 +39,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
      'django.core.context_processors.request',
 )
 
-ROOT_URLCONF = 'reviews.urls'
+ROOT_URLCONF = 'books_app.urls'
 AMZ_KEY_ID = 'AKIAISKUX6FAYKZMHQOA'
 AMZ_SECRET = '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'
 LOGIN_URL = '/login/'

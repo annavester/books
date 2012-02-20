@@ -43,28 +43,8 @@
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="http://blog.annavester.com">My Blog</a></li>
-                        <li><a href="{% url books %}">My Books</a>
-                            <ul>
-                                <li><a href="{% url books %}">books</a></li>
-                                {% if user.is_authenticated %}
-                                <li><a href="{% url add_book %}">add book</a></li>
-                                {% endif %}
-                                <li><a href="{% url authors %}">authors</a></li>
-                                {% if user.is_authenticated %}
-                                <li><a href="{% url add_author %}">add author</a></li>
-                                {% endif %}
-                                <li><a href="{% url reading_lists %}">lists</a></li>
-                                {% if user.is_authenticated %}
-                                <li><a href="{% url add_reading_list %}">add list</a></li>
-                                {% endif %}
-                            </ul>                            
-                        </li>
+                        <li><a href="http://books.annavester.com">My Books</a></li>
                         <li><a href="http://blog.annavester.com/contact-me/">Contact Me</a></li>
-                        {% if user.is_authenticated %}
-                            <li><a href="/logout/">Logout</a></li>
-                        {% else %}
-                            <li><a href="/login/">Login</a></li>
-                        {% endif %}
                     </ul>
                     <a href="/" class="tagline">Anna Vester - Freelance Web Developer</a>
                 </nav>
