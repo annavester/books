@@ -21,7 +21,42 @@
         </aside>
         {% if books %}   
             <section>              
-                {% include page_template %}      
+                {% load endless %}
+                {% paginate 42 books %}
+                {% for book in books %}
+                    <article class="tooltip book 
+                    {% ifequal book.status.name 'Already Read' %} already-read{% endifequal%} 
+                    {% ifequal book.status.name 'Have Not Read' %} have-not-read{% endifequal%} 
+                    {% ifequal book.status.name 'Reading Now' %} reading-now{% endifequal%}">
+                    <a href="{% url view_book book.id %}" title="{{book.title}}" class="first"><img src="/static/book_thumbs/{{book.filename}}" alt="{{book.title}}" /></a>
+                    <aside>
+                        <p><strong>Book Title:</strong> {{book.title}} by 
+                        {% for author in book.authors.all%}
+                            <a href="{% url view_author author.id %}">{{author.first_name}} {{author.last_name}}</a>
+                        {% endfor %}</p>
+                        <p><strong>ISBN:</strong> {{book.isbn}}</p>
+                        {% if book.readinglist.get %} 
+                            {% for rl in book.readinglist.all %}
+                                <p><strong>Reading List:</strong> <a href="{% url view_reading_list rl.id %}">{{ rl.name }}</a></p>
+                            {% endfor %}
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                            <p><a href="{% url view_book book.id %}" class="aAddToList">add to a list</a></p>
+                        {% endif %}
+                        <p><strong>Status:</strong> {{book.status.name}}
+                        {% if user.is_authenticated %}
+                            <a href="{% url view_book book.id %}" class="aUpdateStatus">update</a>
+                        {% endif %}</p>
+                        {% ifequal book.status.name "Already Read" %} 
+                            <p><strong>Rating:</strong> {{book.rating}}</p>
+                            <p><strong>Date Finished:</strong> <time>{{book.datefinished|date}}</time></p>
+                        {% endifequal %}
+                        <p><strong>Last Updated:</strong> <time>{{book.lastupdated|date}}</time></p>
+                    </aside>
+                    <div class="clr"></div>
+                </article>
+                {% endfor %}
+                {% show_more %}     
             </section>     
         {% endif %}
     </div> 
