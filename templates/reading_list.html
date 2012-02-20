@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block pagetitle %} Reading List - {{reading_list.name}} {% endblock %}
+{% block content %}
+<h1>{{reading_list.name}}</h1>
+{% if books %}
+    <div class="books">    
+    	<aside>
+    		<p>Total Number of Books: <small>{{ books|length }}</small><br />
+    			Books Read: <small>{{finished_books}}</small><br />
+    			Reading Now: <small>{{reading_now}}</small><br />
+    			Have Not Read: <small>{{havenotread}}</small></p>
+    	</aside>   
+        
+        {% if books %}
+        	<section>         
+                {% for book in books %}
+                    {% include "books/book_item.html" %}
+                {% endfor %}  
+            </section>
+        {% endif %}      
+    </div>
+{% endif %}  
+{% endblock %}
+
+{% block external %}
+    <script>
+        $(function() {
+            init_tooltip(); 
+        });
+    </script>
+{% endblock %}
