@@ -1,7 +1,7 @@
 from django.db import models
 from books_app.authors.models import Author
 from books_app.readinglists.models import ReadingList
-from settings import UPLOAD_DIR
+from books_app.settings import UPLOAD_DIR
 
 class Book(models.Model):    
     authors = models.ManyToManyField(Author, related_name='books')
