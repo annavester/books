@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.decorators import login_required
 from django.db import models
-from books.models import Book,Category
+from models import Book,Category
 #from books.forms import BookSaveForm, SearchBooksForm, BookUpdateStatusForm, BookAddToListForm
 #from authors.models import Author
 #from readinglists.models import ReadingList
