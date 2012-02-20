@@ -1,6 +1,6 @@
 from django.db import models
-from authors.models import Author
-from readinglists.models import ReadingList
+from books_app.authors.models import Author
+from books_app.readinglists.models import ReadingList
 from settings import UPLOAD_DIR
 
 class Book(models.Model):    
