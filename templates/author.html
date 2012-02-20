@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block pagetitle %} 
+    Author - 
+    {% if author.company_name %}
+        {{author.company_name }} 
+    {% else %}
+        {{author.first_name}} {{author.last_name}}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="author_books">
+        <h1>
+        {% if author.company_name %}
+            {{author.company_name }} 
+        {% else %}
+            {{author.first_name}} {{author.last_name}}
+        {% endif %}
+        </h1> 
+        <aside>            
+            {% if author.website %}
+                <a href="{{author.website}}" target="_blank">author's website</a>
+            {% else %} 
+                {% if user.is_authenticated %}
+                    <a href="#" class="btn aAddWebsite">add author website</a>
+                {% endif %}
+            {% endif %}
+            
+            {% if author.wiki %}
+                <a href="{{author.wiki}}" target="_blank">author's wiki</a>
+            {% else %} 
+                {% if user.is_authenticated %}
+                    <a href="#" class="btn aAddWiki">add author wiki</a>
+                {% endif %}    
+            {% endif %}
+            
+            
+            {% if author.bio %}
+                <h2>About 
+                {% if author.company_name %}
+                    {{author.company_name }} 
+                {% else %}
+                    {{author.first_name}} {{author.last_name}}
+                {% endif %}</h2>
+                <p>{{author.bio}}</p>
+            {% if user.is_authenticated %}<p><a class="btn aEditBio">edit author bio</a></p>{% endif %}
+            {% else %}
+                {% if user.is_authenticated %}<p><a href="#" class="btn aAddBio">add author bio</a></p>{% endif %}
+            {% endif %}
+        </aside>
+        
+        <section>
+            {% if books %}
+                {% for book in books %}
+                    {% include "books/book_item.html" %}
+                {% endfor %}
+             {% endif %}  
+            
+        </section>
+    </div>
+
+{% endblock %}
+
+{% block external %}
+<script>
+    $(document).ready(function() {
+        Contact.init({{author.id}}, "author");
+    });
+</script>
+{% endblock %}

@@ -8,6 +8,8 @@ site_media = os.path.join(settings.PROJECT_DIR, 'static')
 
 urlpatterns = patterns('',
     url(r'^$', book_listing, name='books'),
+    url(r'^/(?P<book_id>[0-9]+)/$', view_book, name='view_book'),
+    url(r'^/(?P<author_id>[0-9]+)/$', view_author, name='view_author'),
     #url(r'^login/$', 'django.contrib.auth.views.login'),
     #url(r'^logout/$', logout_page),
     #url(r'^register/$', register_page),

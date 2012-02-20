@@ -61,27 +61,27 @@ def book_listing(request, extra_context=None, template='home.html'):
     #vars = RequestContext(request, { 'book': aws_book })
     #return render_to_response('user_page.html', vars)
 
-#def view_book(request, book_id, extra_context=None, template_name='books/book.html', temp_ajax='books/book_item.html'):
-#    book = get_object_or_404(Book, id=book_id)
-#    reading_lists = ReadingList.objects.all()
-#    
-#    if request.method == 'POST':   
-#        b = Book.objects.get(id=int(book.id))  
-#        if request.POST.get('status'):  
-#            form = BookUpdateStatusForm(request.POST)
-#            if form.is_valid():                 
-#                b.status = form.cleaned_data['status']
-#                if b.status.name == 'Already Read':
-#                    b.rating = form.cleaned_data['rating']
-#                    b.review = form.cleaned_data['review']
-##                    b.datefinished = form.cleaned_data['datefinished']
- #               b.save()      
- #       if request.POST.get('readinglist'):
- #           form = BookAddToListForm(request.POST)
- #           if form.is_valid():
- #               rl_id = form.cleaned_data['readinglist'].id
- #               rl = ReadingList.objects.get(id=int(rl_id))
- #               b.readinglist.add(rl)
+def view_book(request, book_id, extra_context=None, template_name='books/book.html', temp_ajax='books/book_item.html'):
+    book = get_object_or_404(Book, id=book_id)
+    reading_lists = ReadingList.objects.all()
+
+    if request.method == 'POST':   
+        b = Book.objects.get(id=int(book.id))  
+        if request.POST.get('status'):  
+            form = BookUpdateStatusForm(request.POST)
+            if form.is_valid():                 
+                b.status = form.cleaned_data['status']
+                if b.status.name == 'Already Read':
+                    b.rating = form.cleaned_data['rating']
+                    b.review = form.cleaned_data['review']
+                    b.datefinished = form.cleaned_data['datefinished']
+                b.save()      
+        if request.POST.get('readinglist'):
+            form = BookAddToListForm(request.POST)
+            if form.is_valid():
+                rl_id = form.cleaned_data['readinglist'].id
+                rl = ReadingList.objects.get(id=int(rl_id))
+                b.readinglist.add(rl)
 
 #    form = SearchBooksForm()
 #    books = []
@@ -91,13 +91,18 @@ def book_listing(request, extra_context=None, template='home.html'):
 #        query = request.GET.get('query').strip()
 #        if query:
 #            form = SearchBooksForm({'query': query})
-##            books = Book.objects.filter(title__icontains=query)[:10]
-#    vars = RequestContext(request, {'form':form, 'book':book, 'reading_list':reading_lists, 'show_results':show_results ,'result':books})
+#            books = Book.objects.filter(title__icontains=query)[:10]
+    vars = RequestContext(request, {
+        'form':form, 
+        'book':book, 
+        'reading_list':reading_lists, 
+        'show_results':show_results ,
+        'result':books})
     
-#    if request.GET.has_key('ajax'):
-#        return render_to_response(temp_ajax,vars)
-#    else:
-#        return render_to_response(template_name, vars)
+    if request.GET.has_key('ajax'):
+        return render_to_response(temp_ajax,vars)
+    else:
+        return render_to_response(template_name, vars)
 
 #@login_required
 #def save_book(request, template_name='books/add_book.html'):
