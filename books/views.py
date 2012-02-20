@@ -8,7 +8,7 @@ from django.db import models
 from models import Book,Category
 #from books.forms import BookSaveForm, SearchBooksForm, BookUpdateStatusForm, BookAddToListForm
 #from authors.models import Author
-#from readinglists.models import ReadingList
+from books_app.readinglists.models import ReadingList
 import os
 #from pyaws import ecs
 #import settings
@@ -61,7 +61,7 @@ def book_listing(request, extra_context=None, template='home.html'):
     #vars = RequestContext(request, { 'book': aws_book })
     #return render_to_response('user_page.html', vars)
 
-def view_book(request, book_id, extra_context=None, template_name='books/book.html', temp_ajax='books/book_item.html'):
+def view_book(request, book_id, extra_context=None, template_name='book.html'):
     book = get_object_or_404(Book, id=book_id)
     reading_lists = ReadingList.objects.all()
 
@@ -83,26 +83,11 @@ def view_book(request, book_id, extra_context=None, template_name='books/book.ht
                 rl = ReadingList.objects.get(id=int(rl_id))
                 b.readinglist.add(rl)
 
-#    form = SearchBooksForm()
-#    books = []
-#    show_results = False
-#    if 'query' in request.GET:
-#        show_results = True
-#        query = request.GET.get('query').strip()
-#        if query:
-#            form = SearchBooksForm({'query': query})
-#            books = Book.objects.filter(title__icontains=query)[:10]
     vars = RequestContext(request, {
-        'form':form, 
         'book':book, 
-        'reading_list':reading_lists, 
-        'show_results':show_results ,
-        'result':books})
-    
-    if request.GET.has_key('ajax'):
-        return render_to_response(temp_ajax,vars)
-    else:
-        return render_to_response(template_name, vars)
+        'reading_list':reading_lists})
+
+    return render_to_response(template_name, vars)
 
 #@login_required
 #def save_book(request, template_name='books/add_book.html'):
