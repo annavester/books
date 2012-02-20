@@ -55,12 +55,12 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     #'django.contrib.admindocs',    
-    'account',
-    'books',
-    'books.authors',
-    'books.comments',
-    'books.readinglists',
-    'main',
+    #'account',
+    #'books',
+    #'books.authors',
+    #'books.comments',
+    #'books.readinglists',
+    'books_app.main',
     'endless_pagination',
 )
 
