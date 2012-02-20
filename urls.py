@@ -2,7 +2,8 @@ import os
 from django.conf import settings
 from django.conf.urls.defaults import patterns, include, url, handler404, handler500
 from django.views.generic.simple import direct_to_template
-from books.views import book_listing
+from books.views import book_listing, view_book
+from author.views import view_author
 #from account.views import register_page, logout_page
 site_media = os.path.join(settings.PROJECT_DIR, 'static')
 
