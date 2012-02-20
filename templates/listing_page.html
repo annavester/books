@@ -1,5 +1,6 @@
+Test
 {% load endless %}
-{% paginate 42 books %}               
+{% paginate 42 books %}
 {% for book in books %}
     <article class="tooltip book 
     {% ifequal book.status.name 'Already Read' %} already-read{% endifequal%} 
