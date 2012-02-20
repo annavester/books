@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block pagetitle %} Book - {{book.title}} by  
+    {% for author in book.authors.all%}
+        {{author.first_name}} {{author.last_name}}
+    {% endfor %} 
+{% endblock %}
+{% block content %}
+<div class="breadcrumb"><a href="{% url books %}">back to book listing</a></div>
+<h1>{{book.title}}</h1>
+<article class="{% ifequal book.status.name 'Already Read' %} already-read{% endifequal%} 
+    {% ifequal book.status.name 'Have Not Read' %} have-not-read{% endifequal%} 
+    {% ifequal book.status.name 'Reading Now' %} reading-now{% endifequal%}">
+    <img src="/static/images/book_thumbs/{{book.filename}}" alt="{{book.title}}" />
+    <aside class="fl">
+        <p><strong>Author(s):</strong> 
+        {% for author in book.authors.all%}
+            <a href="{% url view_author author.id %}">{{author.first_name}} {{author.last_name}}</a>
+        {% endfor %}</p>
+        <p><strong>ISBN:</strong> {{book.isbn}}</p>
+        {% if book.readinglist.get %} 
+            {% for rl in book.readinglist.all %}
+                <p><strong>Reading List:</strong> <a href="{% url view_reading_list rl.id %}">{{ rl.name }}</a></p>
+            {% endfor %}
+        {% endif %}
+        {% if user.is_authenticated %}
+            <p><a href="{% url view_book book.id %}" class=" btn aAddToList">add to a list</a></p>
+        {% endif %}
+        <p><strong>Category:</strong> {{book.category}}</p>
+        <p><strong>Pages:</strong> {{book.pages}}</p>
+        <p><strong>Editorial:</strong> {{book.editorial}}</p>
+        <p><strong>Status:</strong> {{book.status.name}} 
+        {% if user.is_authenticated %}
+            <a href="{% url view_book book.id %}" class="btn aUpdateStatus">update</a>
+        {% endif %}</p>
+        {% ifequal book.status.name "Already Read" %} 
+            <p><strong>Rating:</strong> {{book.rating}}</p>
+            {% if book.review %}<p><span class="review"><strong>Review:</strong> {{book.review}}</span></p>{% endif %} 
+            <p><strong>Date Finished:</strong> <time>{{book.datefinished|date}}</time> </p>
+        {% endifequal %}
+        <p><strong>Last Updated:</strong> <time>{{book.lastupdated|date}}</time></p>
+    </aside>
+    <div class="clr"></div>
+</article>
+{% endblock %}
+
+{% block external %}
+<script>
+    $(document).ready(function() {
+        Contact.init({{book.id}}, "book");
+    });
+</script>
+{% endblock %}
