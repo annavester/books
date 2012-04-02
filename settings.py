@@ -40,8 +40,6 @@ TEMPLATE_CONTEXT_PROCESSORS += (
 )
 
 ROOT_URLCONF = 'books_app.urls'
-AMZ_KEY_ID = 'AKIAISKUX6FAYKZMHQOA'
-AMZ_SECRET = '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'
 LOGIN_URL = '/login/'
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, "templates"),
@@ -55,7 +53,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     #'django.contrib.admindocs',    
-    #'account',
+    'books_app.accounts',
     'books_app.books',
     'books_app.authors',
     'books_app.readinglists',

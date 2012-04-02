@@ -1,23 +1,24 @@
 {% extends "base.html" %}
-{% block pagetitle %} Freelance Web Developer - Portfolio{% endblock %}
 
 {% block content %}
     <div class="books">   
         <h1>My Library</h1>  
         <aside>
             <h2>About</h2>
-            <p>My library is my personal project, where I track status of my books.</p>
+            <p>This is my personal project, where I track my books reading status.</p>
             <p>It is a work in progress, and it serves me as a web development playground.</p>  
             
             <h2>Under the hood</h2>
-            <p>Django, Sass, CSS3, HTML5 and jQuery are the building blocks of this project.</p> 
+            <p>Django, Compass/Sass, CSS3, HTML5 and jQuery are the building blocks.</p> 
             
-            <h2>Reading Status</h2>
-            <p>Total Number of Books: {{books|length}}<br />
-                Already Read: {{read_books}}<br />
-                Have Not Read: {{havenotread_books}}<br />
-                Reading Now: {{readingnow_books}}<br />
-            </p>
+            {% if listing %}
+	            <h2>Status</h2>
+	            <p>Total Number of Books: {{books|length}}<br />
+	                Already Read: <a href="{% url books_by_status 1 %}">{{read_books}}</a><br />
+	                Have Not Read: <a href="{% url books_by_status 2 %}">{{havenotread_books}}</a><br />
+	                Reading Now: <a href="{% url books_by_status 3 %}">{{readingnow_books}}</a>
+	            </p>
+            {% endif %}
         </aside>
         {% if books %}   
             <section>

@@ -1,0 +1,17 @@
+<div class="divStatus">
+    <div class="status-content">        
+        <h1 class="status-title">Update Status</h1>
+        <div class="status-loading" style="display:none;"></div>
+        <div class="status-message" style="display:none;"></div>
+        <form method="post" action="{% url view_book book.id %}">
+            {% csrf_token %}
+            {{form.status.label_tag}}: {{ form.status }}
+            <div class="divHaveRead" style="display:none;">       
+                {{form.rating.label_tag}}: {{ form.rating }}<br />                 
+                {{form.review.label_tag}}: {{ form.review }}<br />
+                {{form.datefinished.label_tag}}: {{ form.datefinished }}
+            </div>
+            <input type="submit" value="save" class="status-save" />
+        </form>            
+    </div>
+</div>

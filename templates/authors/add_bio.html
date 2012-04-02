@@ -1,0 +1,12 @@
+<div class="divStatus">
+    <div class="status-content">        
+        <h1 class="status-title">Add Author Bio</h1>
+        <div class="status-loading" style="display:none;"></div>
+        <div class="status-message" style="display:none;"></div>
+        <form method="post" action="{% url view_author author.id %}">
+            {% csrf_token %}
+            {{form.bio.label_tag}}: {{ form.bio }}
+            <input type="submit" value="save" class="status-save" />
+        </form>            
+    </div>
+</div>

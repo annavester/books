@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>{% block pagetitle %} {% endblock %} - Anna Vester</title>
+        <title>{% block pagetitle %} {% endblock %} My Books by Anna Vester</title>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
         <meta name="description" content="Anna Vester, freelance web developer based in Northwest Arkansas, USA"  />
@@ -22,7 +22,7 @@
 
         <link href="/static/s.css" rel="stylesheet" type="text/css" />      
         <link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css' />  
-        <script src="/static/scripts/jquery.js"></script>
+        <script src="/static/scripts/jquery-1.7.1.min.js"></script>
         <script type="text/javascript">
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-12515472-3']);
@@ -35,6 +35,7 @@
           })();
         
         </script>
+        {% block extra_styles %} {% endblock %}
     </head>
     <body id="home">
         <div id="page"> 
