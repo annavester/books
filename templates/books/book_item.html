@@ -17,11 +17,15 @@
         {% if user.is_authenticated %}
             <p><a href="{% url view_book book.id %}" class="aAddToList">add to a list</a></p>
         {% endif %}
+        <p><strong>Own:</strong> {% if book.own %} Yes {% else %} No {% endif %}
+    	{% if user.is_authenticated %}
+        	<a href="{% url view_book book.id %}" class="aUpdateOwn">update</a>
+    	{% endif %}</p>
 		<p><strong>Status:</strong> {{book.status.name}}
         {% if user.is_authenticated %}
             <a href="{% url view_book book.id %}" class="aUpdateStatus">update</a>
         {% endif %}</p>
-		{% ifequal book.status.name "Already Read" %} 
+		{% ifequal book.status.name "Already Read" %} 		
             <p><strong>Rating:</strong> {{book.rating}}</p>
             <p><strong>Date Finished:</strong> <time>{{book.datefinished|date}}</time></p>
         {% endifequal %}
