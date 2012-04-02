@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelMultipleChoiceField
 from django.utils.safestring import mark_safe
-from authors.models import Author
+from books_app.authors.models import Author
 from models import Book, Binding, Category, Status
 from books_app.readinglists.models import ReadingList
 

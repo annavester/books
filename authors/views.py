@@ -6,8 +6,8 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from models import Author
-from authors.forms import AuthorSaveForm, AddWebsiteForm, AddBioForm, AddWikiForm
-from readinglists.models import ReadingList 
+from forms import AuthorSaveForm, AddWebsiteForm, AddBioForm, AddWikiForm
+from books_app.readinglists.models import ReadingList 
 
 def authors(request, extra_context=None, template_name='authors_listing.html'):
     authors_list  = Author.objects.all()
