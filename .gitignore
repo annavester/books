@@ -7,3 +7,4 @@ local_settings.py
 .sass-cache/*
 .project
 .pydevproject
+status/images/book_thumbs/*
