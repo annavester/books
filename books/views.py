@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.db import models
 from models import Book,Category
 from forms import BookSaveForm, SearchBooksForm, BookUpdateStatusForm, BookUpdateOwnForm, BookAddToListForm
-from authors.models import Author
-from readinglists.models import ReadingList
+from books_app.authors.models import Author
+from books_app.readinglists.models import ReadingList
 import os
 #from pyaws import ecs
 #import settings

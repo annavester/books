@@ -42,10 +42,13 @@
             <header>
                 <nav>
                     <ul>
-                        <li><a href="http://annavester.com">Home</a></li>
-                        <li><a href="http://blog.annavester.com">My Blog</a></li>
-                        <li><a href="http://books.annavester.com">My Books</a></li>
-                        <li><a href="http://blog.annavester.com/contact-me/">Contact Me</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/authors">Authors</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="/author/add">Add Author</a></li>
+                            <li><a href="/book/add">Add Book</a></li>
+                        {% endif %}
+                        <li><a href="/login">Login</a></li>
                     </ul>
                     <a href="/" class="tagline">My Books</a>
                 </nav>
