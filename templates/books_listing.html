@@ -7,6 +7,7 @@
     {% ifequal book.status.name 'Reading Now' %} reading-now{% endifequal%}">
     <a href="{% url view_book book.id %}" title="{{book.title}}" class="first"><img src="/static/images/book_thumbs/{{book.filename}}" alt="{{book.title}}" /></a>
     <aside>
+        <a class="delete" href="{% url delete_book book.id %}">x</a>
         <p><strong>Book Title:</strong> {{book.title}} by 
         {% for author in book.authors.all%}
             <a href="{% url view_author author.id %}">{{author.first_name}} {{author.last_name}}</a>

@@ -90,6 +90,12 @@ def save_book(request, template_name='books/add_book.html'):
     return render_to_response(template_name, vars)
 
 @login_required
+def delete_book(request, book_id):
+    b = Book.objects.get(id=int(book_id))
+    b.delete();
+    return HttpResponseRedirect('/')
+          
+@login_required
 def update_status(request, book_id, template_name='books/update_status.html'):    
     book = get_object_or_404(Book, id=book_id)
     form = BookUpdateStatusForm()  
