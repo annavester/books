@@ -9,7 +9,7 @@ var Contact = {
             e.preventDefault();
 
             // load the Contact form using ajax
-            $.get("/books/"+book+"/update_status", function(data) {
+            $.get("/book/"+book+"/update_status", function(data) {
                 // create a modal dialog with the data
                 $(data).modal({
                     closeHTML: "<a href='#' title='Close' class='modal-close'>x</a>",
@@ -28,7 +28,25 @@ var Contact = {
             e.preventDefault();
 
             // load the Contact form using ajax
-            $.get("/books/"+book+"/add_to_list", function(data) {
+            $.get("/book/"+book+"/add_to_list", function(data) {
+                // create a modal dialog with the data
+                $(data).modal({
+                    closeHTML: "<a href='#' title='Close' class='modal-close'>x</a>",
+                    position: ["15%",],
+                    overlayId: 'modal-overlay',
+                    containerId: 'status-container',
+                    onOpen: Contact.open,
+                    onShow: Contact.show,
+                    onClose: Contact.close
+                });
+            });
+        });
+        
+        $('.aUpdateOwn').click( function (e) {
+            e.preventDefault();
+
+            // load the Contact form using ajax
+            $.get("/book/"+book+"/update_own", function(data) {
                 // create a modal dialog with the data
                 $(data).modal({
                     closeHTML: "<a href='#' title='Close' class='modal-close'>x</a>",
@@ -46,7 +64,7 @@ var Contact = {
             e.preventDefault();
 
             // load the Contact form using ajax
-            $.get("/books/authors/"+book+"/add_website", function(data) {
+            $.get("/author/"+book+"/add_website", function(data) {
                 // create a modal dialog with the data
                 $(data).modal({
                     closeHTML: "<a href='#' title='Close' class='modal-close'>x</a>",
@@ -64,7 +82,7 @@ var Contact = {
             e.preventDefault();
 
             // load the Contact form using ajax
-            $.get("/books/authors/"+book+"/add_bio", function(data) {
+            $.get("/author/"+book+"/add_bio", function(data) {
                 // create a modal dialog with the data
                 $(data).modal({
                     closeHTML: "<a href='#' title='Close' class='modal-close'>x</a>",
@@ -82,7 +100,7 @@ var Contact = {
             e.preventDefault();
 
             // load the Contact form using ajax
-            $.get("/books/authors/"+book+"/add_wiki", function(data) {
+            $.get("/author/"+book+"/add_wiki", function(data) {
                 // create a modal dialog with the data
                 $(data).modal({
                     closeHTML: "<a href='#' title='Close' class='modal-close'>x</a>",
@@ -154,9 +172,9 @@ var Contact = {
                 }, function () {
                     $('#status-container .status-loading').fadeIn(200, function () {
                         if (Contact.obj_type == "author") {                            
-                            actionUrl = '/books/authors/'+book+'/';
+                            actionUrl = '/author/'+book+'/';
                         } else {
-                            actionUrl = '/books/'+book+'/';
+                            actionUrl = '/book/'+book+'/';
                         }
                         $.ajax({
                             url: actionUrl,

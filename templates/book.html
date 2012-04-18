@@ -28,6 +28,10 @@
         <p><strong>Category:</strong> {{book.category}}</p>
         <p><strong>Pages:</strong> {{book.pages}}</p>
         <p><strong>Editorial:</strong> {{book.editorial}}</p>
+        <p><strong>Own:</strong> {% if book.own %} Yes {% else %} No {% endif %}
+    	{% if user.is_authenticated %}
+        	<a href="{% url view_book book.id %}" class="aUpdateOwn">update</a>
+    	{% endif %}</p>
         <p><strong>Status:</strong> {{book.status.name}} 
         {% if user.is_authenticated %}
             <a href="{% url view_book book.id %}" class="btn aUpdateStatus">update</a>

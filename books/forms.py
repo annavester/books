@@ -1,9 +1,9 @@
 from django import forms
 from django.forms import ModelMultipleChoiceField
 from django.utils.safestring import mark_safe
-from books.authors.models import Author
-from books.models import Book, Binding, Category, Status
-from books.readinglists.models import ReadingList
+from books_app.authors.models import Author
+from models import Book, Binding, Category, Status
+from books_app.readinglists.models import ReadingList
 
 class AuthorModelChoiceField(ModelMultipleChoiceField):
     def label_from_instance(self, obj):
@@ -34,6 +34,11 @@ RATING_CHOICES = (
                   ('9', '9'),
 )
 
+OWN_CHOICES = ( 
+               ('0', 'No'),
+               ('1', 'Yes')
+)
+
 class BookSaveForm(forms.ModelForm):
     title = forms.CharField(label=u'Book Title')
     authors = AuthorModelChoiceField(queryset=Author.objects.all().order_by('last_name'),widget=forms.SelectMultiple(attrs={"size":5}))
@@ -46,8 +51,8 @@ class BookSaveForm(forms.ModelForm):
     amazon_link = forms.CharField(label=u'Amazon/Google Link')
     imagepath = forms.FileField(label=u'Image Path')
     pages = forms.IntegerField()
-    editorial = forms.CharField()
-    review = forms.CharField(required=False)
+    editorial = forms.CharField(widget=forms.Textarea)
+    review = forms.CharField(widget=forms.Textarea, required=False)
     readinglist =forms.ModelChoiceField(queryset=ReadingList.objects.all().order_by('name'), empty_label='--', required=False)
     datefinished = forms.DateField(required=False)
     
@@ -82,3 +87,6 @@ class BookUpdateStatusForm(forms.Form):
     
 class BookAddToListForm(forms.Form):
     readinglist=forms.ModelChoiceField(label='Reading List',queryset=ReadingList.objects.all().order_by('name'), empty_label='--')
+    
+class BookUpdateOwnForm(forms.Form):
+    own = forms.ChoiceField(choices=OWN_CHOICES)

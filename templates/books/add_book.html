@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block pagetitle %} Add new Book :: {% endblock %}
+{% block extra_styles %}
+	<link href="/static/css/smoothness/jquery-ui-1.8.18.custom.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<h2>Add a new Book</h2>
+<form method="post" action="." enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in save_form %}
+        <p class="clearfix">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </p>
+    {% endfor %}
+    <input type="submit" value="save">
+</form>
+{% endblock %}
+{% block external %}
+	<script src="/static/scripts/jquery-ui-1.8.18.custom.min.js"></script>
+	<script>
+		$(function() {
+			$('#id_datefinished').datepicker({ dateFormat: 'yy-mm-dd' });
+			
+			$('#id_isbn').blur(function(){
+				var isbn = $(this).val();
+				var url = "https://www.googleapis.com/books/v1/volumes?callback=?&q="
+				$.getJSON(url + isbn, function(response){
+					var item = response.items[0];
+			        $('#id_title').val(item.volumeInfo.title);
+			        $('#id_pages').val(item.volumeInfo.pageCount);			        
+			        $('#id_amazon_link').val(item.volumeInfo.infoLink);
+			      	$('#id_editorial').val(item.volumeInfo.description);
+				});
+			});
+		});
+	</script>	
+{% endblock %}
+
+

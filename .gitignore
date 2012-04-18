@@ -4,4 +4,7 @@
 r
 v
 local_settings.py
+.sass-cache/*
+.project
+.pydevproject
 static/images/book_thumbs/*
