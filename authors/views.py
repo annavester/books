@@ -5,11 +5,11 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from books_app.authors.models import Author
-#from books_app.authors.forms import AuthorSaveForm, AddWebsiteForm, AddBioForm, AddWikiForm
+from models import Author
+from forms import AuthorSaveForm, AddWebsiteForm, AddBioForm, AddWikiForm
 from books_app.readinglists.models import ReadingList 
 
-def authors_listing(request, extra_context=None, template_name='books/authors/listing.html'):
+def authors(request, extra_context=None, template_name='authors_listing.html'):
     authors_list  = Author.objects.all()
         
     vars = RequestContext(request, {'authors':authors_list})
@@ -42,7 +42,7 @@ def view_author(request, author_id, extra_context=None, template_name='author.ht
     return render_to_response(template_name, vars)
 
 @login_required
-def save_author(request, extra_content=None, template_name='books/authors/add_author.html'):
+def save_author(request, extra_content=None, template_name='authors/add_author.html'):
     if request.method == 'POST':
         form = AuthorSaveForm(request.POST)
         if form.is_valid():               
@@ -53,21 +53,21 @@ def save_author(request, extra_content=None, template_name='books/authors/add_au
     return render_to_response(template_name, vars)
 
 @login_required
-def add_website(request, author_id, template_name='books/add_website.html'):    
+def add_website(request, author_id, template_name='authors/add_website.html'):    
     author = get_object_or_404(Author, id=author_id)
     form = AddWebsiteForm()  
     vars = RequestContext(request, {'author':author, 'form':form })       
     return render_to_response(template_name, vars)
 
 @login_required
-def add_bio(request, author_id, template_name='books/add_bio.html'):    
+def add_bio(request, author_id, template_name='authors/add_bio.html'):    
     author = get_object_or_404(Author, id=author_id)
     form = AddBioForm()  
     vars = RequestContext(request, {'author':author, 'form':form })       
     return render_to_response(template_name, vars)
 
 @login_required
-def add_wiki(request, author_id, template_name='books/add_wiki.html'):    
+def add_wiki(request, author_id, template_name='authors/add_wiki.html'):    
     author = get_object_or_404(Author, id=author_id)
     form = AddWikiForm()  
     vars = RequestContext(request, {'author':author, 'form':form })       

@@ -1,5 +1,6 @@
 @import "reset";
 @import "common";
+@import "compass";
 @mixin rounded{border-radius: 5px;-moz-border-radius: 5px;-webkit-border-radius: 5px;}
 @mixin h2p{ 
   p {font: 11px / 14px Arial, sans-serif;padding-bottom: 5px;
@@ -136,6 +137,11 @@ article {
     } 
   }
 
+form {margin-top:15px;
+  p{clear:left;padding:5px 0;}
+  label{font-weight:600;font-size:14px;display:block;float:left;width:200px;}
+  input[type="submit"]{border:1px solid #ccc;border-radius:5px;margin:10px 0 0 200px;text-transform:uppercase;padding:3px 15px;@include background-image(linear-gradient(white, #cccccc, #aaaaaa)); }
+  }
 /* Overlay */
 #modal {display: none; }
 #modal-overlay {background-color: #000;cursor: wait; }
@@ -155,6 +161,10 @@ footer {background: #000;width: 100%;font-size: 11px;position: relative;
   p {position: absolute;text-align: center;top: 10px;width: 100%; }
   a:hover {background: none; } 
   }
+  
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }  
 .ir {display: block;text-indent: -999em;overflow: hidden;background-repeat: no-repeat;text-align: left;direction: ltr; }
 .hidden {display: none;visibility: hidden; }
 .visuallyhidden {border: 0;clip: rect(0 0 0 0);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;

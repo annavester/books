@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block pagetitle %} Add new Author :: {% endblock %}
+{% block content %}
+<h2>Add a new Author</h2>
+<form method="post" action=".">
+    {% csrf_token %}
+    {% for field in save_form %}
+        <p class="clearfix">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </p>
+    {% endfor %}
+    <input type="submit" value="save">
+</form>
+{% endblock %}
