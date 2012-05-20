@@ -77,7 +77,7 @@ def get_latest_read(request, count):
     return HttpResponse(simplejson.JSONEncoder().encode(list(books)), mimetype="application/json")
 
 def get_reading_now(request, count):
-    books = Book.objects.select_related().filter(status=3).values_list('id','filename').order_by("-lastupdated")[:count]    
+    books = Book.objects.select_related().filter(status=3).values('id','filename').order_by("-lastupdated")[:count]    
     return HttpResponse(simplejson.JSONEncoder().encode(list(books)), mimetype="application/json")
     
 @login_required
