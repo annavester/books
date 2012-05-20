@@ -73,11 +73,11 @@ def view_book(request, book_id, extra_context=None, template_name='book.html'):
     return render_to_response(template_name, vars)
 
 def get_latest_read(request, count):
-    books = Book.objects.select_related().filter(status=1).values_list('id','title').order_by("-lastupdated")[:count]    
+    books = Book.objects.select_related().filter(status=1).values('id','filename').order_by("-datefinished")[:count]    
     return HttpResponse(simplejson.JSONEncoder().encode(list(books)), mimetype="application/json")
 
 def get_reading_now(request, count):
-    books = Book.objects.select_related().filter(status=3).values_list('id','title').order_by("-lastupdated")[:count]    
+    books = Book.objects.select_related().filter(status=3).values_list('id','filename').order_by("-lastupdated")[:count]    
     return HttpResponse(simplejson.JSONEncoder().encode(list(books)), mimetype="application/json")
     
 @login_required
