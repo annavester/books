@@ -1,4 +1,4 @@
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
@@ -9,6 +9,8 @@ from models import Book,Category
 from forms import BookSaveForm, SearchBooksForm, BookUpdateStatusForm, BookUpdateOwnForm, BookAddToListForm
 from books_app.authors.models import Author
 from books_app.readinglists.models import ReadingList
+from django.utils import simplejson
+from django.utils.simplejson import JSONEncoder
 import os
 #from pyaws import ecs
 #import settings
@@ -70,6 +72,14 @@ def view_book(request, book_id, extra_context=None, template_name='book.html'):
 
     return render_to_response(template_name, vars)
 
+def get_latest_read(request, count):
+    books = Book.objects.select_related().filter(status=1).values_list('id','title').order_by("-lastupdated")[:count]    
+    return HttpResponse(simplejson.JSONEncoder().encode(list(books)), mimetype="application/json")
+
+def get_reading_now(request, count):
+    books = Book.objects.select_related().filter(status=3).values_list('id','title').order_by("-lastupdated")[:count]    
+    return HttpResponse(simplejson.JSONEncoder().encode(list(books)), mimetype="application/json")
+    
 @login_required
 def save_book(request, template_name='books/add_book.html'):
     if request.method == 'POST':
@@ -89,6 +99,12 @@ def save_book(request, template_name='books/add_book.html'):
     vars = RequestContext(request, {'save_form': form})
     return render_to_response(template_name, vars)
 
+@login_required
+def delete_book(request, book_id):
+    b = Book.objects.get(id=int(book_id))
+    b.delete();
+    return HttpResponseRedirect('/')
+          
 @login_required
 def update_status(request, book_id, template_name='books/update_status.html'):    
     book = get_object_or_404(Book, id=book_id)
