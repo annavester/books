@@ -2,7 +2,7 @@ import os
 from django.conf import settings
 from django.conf.urls.defaults import patterns, include, url, handler404, handler500
 from django.views.generic.simple import direct_to_template
-from books.views import book_listing, view_book, update_status, update_own,save_book,delete_book
+from books.views import book_listing, view_book, update_status, update_own,save_book,delete_book,get_latest_read,get_reading_now
 from authors.views import view_author, authors, add_website, add_bio, add_wiki, save_author
 from readinglists.views import view_reading_list
 from accounts.views import logout_page
@@ -26,6 +26,8 @@ urlpatterns = patterns('',
     url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^logout/$', logout_page),
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': site_media}),
+    url(r'^api/v1/latest_read/(?P<count>[0-9]+)/$', get_latest_read),
+    url(r'^api/v1/reading_now/(?P<count>[0-9]+)/$', get_reading_now),
 )
 
 urlpatterns += patterns('django.views.generic.simple',
