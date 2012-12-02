@@ -12,6 +12,9 @@
     {% ifequal book.status.name 'Reading Now' %} reading-now{% endifequal%}">
     <img src="/static/images/book_thumbs/{{book.filename}}" alt="{{book.title}}" />
     <aside class="fl">
+        {% if user.is_authenticated %}
+        <a class="delete" href="{% url delete_book book.id %}">x</a>
+        {% endif %}
         <p><strong>Author(s):</strong> 
         {% for author in book.authors.all%}
             <a href="{% url view_author author.id %}">{{author.first_name}} {{author.last_name}}</a>
@@ -29,9 +32,9 @@
         <p><strong>Pages:</strong> {{book.pages}}</p>
         <p><strong>Editorial:</strong> {{book.editorial}}</p>
         <p><strong>Own:</strong> {% if book.own %} Yes {% else %} No {% endif %}
-    	{% if user.is_authenticated %}
-        	<a href="{% url view_book book.id %}" class="aUpdateOwn">update</a>
-    	{% endif %}</p>
+        {% if user.is_authenticated %}
+            <a href="{% url view_book book.id %}" class="aUpdateOwn">update</a>
+        {% endif %}</p>
         <p><strong>Status:</strong> {{book.status.name}} 
         {% if user.is_authenticated %}
             <a href="{% url view_book book.id %}" class="btn aUpdateStatus">update</a>

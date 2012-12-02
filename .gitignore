@@ -1,7 +1,6 @@
 *.log
 *.pot
 *.pyc
-*.DS_Store
 r
 v
 local_settings.py
@@ -9,4 +8,5 @@ local_settings.py
 .project
 .pydevproject
 static/images/book_thumbs/*
+.DS_Store
 .idea/*

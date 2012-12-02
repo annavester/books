@@ -17,7 +17,7 @@ LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = True
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'static')
-UPLOAD_DIR = os.path.join(MEDIA_ROOT, 'book_thumbs')
+UPLOAD_DIR = os.path.join(MEDIA_ROOT, 'images/book_thumbs')
 MEDIA_URL = ''
 ADMIN_MEDIA_PREFIX = '/media/'
 SECRET_KEY = '8dzc7j2^q$^(i2=x1r658oj!odfwrrt5wds&snbcyyg&8t8@&q'
