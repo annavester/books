@@ -2,7 +2,7 @@ import os
 from django.conf import settings
 from django.conf.urls.defaults import patterns, include, url, handler404, handler500
 from django.views.generic.simple import direct_to_template
-from books.views import book_listing, book_stats, view_book, update_status, update_own,save_book
+from books.views import book_listing, book_stats, view_book, update_status, update_own,save_book ,get_latest_read,get_reading_now
 from authors.views import view_author, authors, add_website, add_bio, add_wiki, save_author
 from readinglists.views import view_reading_list
 from accounts.views import logout_page
@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     url(r'^(?P<status_id>[1-3]+)/$', book_listing, name='books_by_status'),
     url(r'^stats/$', book_stats, name='view_stats'),
     url(r'^stats/(?P<year>[0-9]{4})/$', book_stats, name='view_stats_by_year'),
+    url(r'^api/v1/latest_read/(?P<count>[0-9]{0,4})/$', get_latest_read),
+    url(r'^api/v1/reading_now/(?P<count>[0-9]{0,4})/$', get_reading_now),
     url(r'^book/(?P<book_id>[0-9]+)/$', view_book, name='view_book'),
     url(r'^book/(?P<book_id>[0-9]+)/update_status$', update_status, name='update_status'),
     url(r'^book/(?P<book_id>[0-9]+)/update_own$', update_own, name='update_own'),
