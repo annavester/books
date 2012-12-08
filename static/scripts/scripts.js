@@ -1,14 +1,15 @@
-var Contact = {
+var Book = {
     message: null,
     book: null,
     obj_type: null,
+    
     init: function (book_id, obj_type) {
         book = book_id;
-        Contact.obj_type = obj_type;
+        Book.obj_type = obj_type;
         $('.aUpdateStatus').click( function (e) {
             e.preventDefault();
 
-            // load the Contact form using ajax
+            // load the Book form using ajax
             $.get("/book/"+book+"/update_status", function(data) {
                 // create a modal dialog with the data
                 $(data).modal({
@@ -16,9 +17,9 @@ var Contact = {
                     position: ["15%",],
                     overlayId: 'modal-overlay',
                     containerId: 'status-container',
-                    onOpen: Contact.open,
-                    onShow: Contact.show,
-                    onClose: Contact.close
+                    onOpen: Book.open,
+                    onShow: Book.show,
+                    onClose: Book.close
                 });
             });
         });
@@ -27,7 +28,7 @@ var Contact = {
         $('.aAddToList').click( function (e) {
             e.preventDefault();
 
-            // load the Contact form using ajax
+            // load the Book form using ajax
             $.get("/book/"+book+"/add_to_list", function(data) {
                 // create a modal dialog with the data
                 $(data).modal({
@@ -35,9 +36,9 @@ var Contact = {
                     position: ["15%",],
                     overlayId: 'modal-overlay',
                     containerId: 'status-container',
-                    onOpen: Contact.open,
-                    onShow: Contact.show,
-                    onClose: Contact.close
+                    onOpen: Book.open,
+                    onShow: Book.show,
+                    onClose: Book.close
                 });
             });
         });
@@ -45,7 +46,7 @@ var Contact = {
         $('.aUpdateOwn').click( function (e) {
             e.preventDefault();
 
-            // load the Contact form using ajax
+            // load the Book form using ajax
             $.get("/book/"+book+"/update_own", function(data) {
                 // create a modal dialog with the data
                 $(data).modal({
@@ -53,9 +54,9 @@ var Contact = {
                     position: ["15%",],
                     overlayId: 'modal-overlay',
                     containerId: 'status-container',
-                    onOpen: Contact.open,
-                    onShow: Contact.show,
-                    onClose: Contact.close
+                    onOpen: Book.open,
+                    onShow: Book.show,
+                    onClose: Book.close
                 });
             });
         });
@@ -63,7 +64,7 @@ var Contact = {
         $('.aAddWebsite').click( function (e) {
             e.preventDefault();
 
-            // load the Contact form using ajax
+            // load the Book form using ajax
             $.get("/author/"+book+"/add_website", function(data) {
                 // create a modal dialog with the data
                 $(data).modal({
@@ -71,9 +72,9 @@ var Contact = {
                     position: ["15%",],
                     overlayId: 'modal-overlay',
                     containerId: 'status-container',
-                    onOpen: Contact.open,
-                    onShow: Contact.show,
-                    onClose: Contact.close
+                    onOpen: Book.open,
+                    onShow: Book.show,
+                    onClose: Book.close
                 });
             });
         });
@@ -81,7 +82,7 @@ var Contact = {
         $('.aAddBio').click( function (e) {
             e.preventDefault();
 
-            // load the Contact form using ajax
+            // load the Book form using ajax
             $.get("/author/"+book+"/add_bio", function(data) {
                 // create a modal dialog with the data
                 $(data).modal({
@@ -89,9 +90,9 @@ var Contact = {
                     position: ["15%",],
                     overlayId: 'modal-overlay',
                     containerId: 'status-container',
-                    onOpen: Contact.open,
-                    onShow: Contact.show,
-                    onClose: Contact.close
+                    onOpen: Book.open,
+                    onShow: Book.show,
+                    onClose: Book.close
                 });
             });
         });
@@ -99,7 +100,7 @@ var Contact = {
         $('.aAddWiki').click( function (e) {
             e.preventDefault();
 
-            // load the Contact form using ajax
+            // load the Book form using ajax
             $.get("/author/"+book+"/add_wiki", function(data) {
                 // create a modal dialog with the data
                 $(data).modal({
@@ -107,9 +108,9 @@ var Contact = {
                     position: ["15%",],
                     overlayId: 'modal-overlay',
                     containerId: 'status-container',
-                    onOpen: Contact.open,
-                    onShow: Contact.show,
-                    onClose: Contact.close
+                    onOpen: Book.open,
+                    onShow: Book.show,
+                    onClose: Book.close
                 });
             });
         });
@@ -160,7 +161,7 @@ var Contact = {
         $('#status-container .status-save').click( function (e) {
             e.preventDefault();
             // validate form
-            if (Contact.validate()) {
+            if (Book.validate()) {
                 var msg = $('#status-container .status-message');
                 msg.fadeOut( function () {
                     msg.removeClass('status-error').empty();
@@ -171,7 +172,7 @@ var Contact = {
                     height: '80px'
                 }, function () {
                     $('#status-container .status-loading').fadeIn(200, function () {
-                        if (Contact.obj_type == "author") {                            
+                        if (Book.obj_type == "author") {                            
                             actionUrl = '/author/'+book+'/';
                         } else {
                             actionUrl = '/book/'+book+'/';
@@ -187,7 +188,7 @@ var Contact = {
                                     $('#status-container .status-title').html('Thank you!');
                                 });
                             },
-                            error: Contact.error
+                            error: Book.error
                         });
                     });
                 });
@@ -196,13 +197,13 @@ var Contact = {
                     var msg = $('#status-container .status-message div');
                     msg.fadeOut(200, function () {
                         msg.empty();
-                        Contact.showError();
+                        Book.showError();
                         msg.fadeIn(200);
                     });
                 } else {
                     $('#status-container .status-message').animate({
                         height: '30px'
-                    }, Contact.showError);
+                    }, Book.showError);
                 }
 
             }
@@ -228,31 +229,31 @@ var Contact = {
         alert(xhr.statusText);
     },
     validate: function () {
-        Contact.message = '';
+        Book.message = '';
         if ($('#id_status').length != 0) {
             if (!$('#status-container #id_status').val()) {
-                Contact.message += 'Status is required. ';
+                Book.message += 'Status is required. ';
             }
             if ($('#status-container #id_status').val()==1) {
                 if ($('#status-container #id_rating').val()==0) {
-                    Contact.message += 'Rating is required. ';
+                    Book.message += 'Rating is required. ';
                 }
     
                 if (!$('#status-container #id_datefinished').val()) {
-                    Contact.message += 'Date Finished is required. ';
+                    Book.message += 'Date Finished is required. ';
                 }
     
                 if (!$('#status-container #id_review').val()) {
-                    Contact.message += 'Review is required.';
+                    Book.message += 'Review is required.';
                 }
             }
         } else if ($('#id_readinglist').length != 0) {
             if (!$('#status-container #id_readinglist').val()) {
-                Contact.message += 'Readinglist is required. ';
+                Book.message += 'Readinglist is required. ';
             }
         }
 
-        if (Contact.message.length > 0) {
+        if (Book.message.length > 0) {
             return false;
         } else {
             return true;
@@ -260,7 +261,7 @@ var Contact = {
     },
     showError: function () {
         $('#status-container .status-message')
-        .html($('<div class="status-error"></div>').append(Contact.message))
+        .html($('<div class="status-error"></div>').append(Book.message))
         .fadeIn(200);
     }
 };
