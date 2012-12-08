@@ -8,3 +8,5 @@ local_settings.py
 .project
 .pydevproject
 static/images/book_thumbs/*
+.DS_Store
+.idea/*

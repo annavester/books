@@ -1,6 +1,7 @@
 @import "reset";
 @import "common";
 @import "compass";
+
 @mixin rounded{border-radius: 5px;-moz-border-radius: 5px;-webkit-border-radius: 5px;}
 @mixin h2p{ 
   p {font: 11px / 14px Arial, sans-serif;padding-bottom: 5px;
@@ -10,6 +11,7 @@
 $red:#f83a3a;
 $yellow:#f8ce3a;
 $green:#3af83a;
+
 
 /* top shadow */
 body:before {content: "";position: fixed;height: 10px;width: 110%;top: -10px;left: -10px;-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);-moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);-ms-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);-o-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);z-index: 1000; }

@@ -35,6 +35,23 @@ def book_listing(request, status_id=None, extra_context=None, template='home.htm
         context.update(extra_context)
     return render_to_response(template, context, context_instance=RequestContext(request))
 
+def book_stats(request, year=None, extra_context=None, template='stats.html'):
+    if year is not None:
+        context = {
+            'year': year,
+            'book_count': Book.objects.filter(datefinished__year=year).count(),
+        }
+    else:
+        context = {
+
+        }
+
+    if extra_context is not None:
+        context.update(extra_context)
+
+    return render_to_response(template, context, context_instance=RequestContext(request))
+
+
 def view_book(request, book_id, extra_context=None, template_name='book.html'):
     book = get_object_or_404(Book, id=book_id)
     reading_lists = ReadingList.objects.all()
