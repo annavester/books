@@ -1,6 +1,6 @@
 import os
 from django.conf import settings
-from django.conf.urls.defaults import patterns, include, url, handler404, handler500
+from django.conf.urls import patterns, include, url, handler404, handler500
 from django.views.generic import TemplateView
 from books.views import book_listing, book_stats, view_book, update_status, update_own,save_book,delete_book,get_latest_read,get_reading_now,add_to_list
 from authors.views import view_author, authors, add_website, add_bio, add_wiki, save_author

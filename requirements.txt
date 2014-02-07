@@ -1,1 +1,1 @@
-django-endless-pagination==1.1
+django-endless-pagination
