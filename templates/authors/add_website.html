@@ -3,7 +3,7 @@
         <h1 class="status-title">Add Author Website</h1>
         <div class="status-loading" style="display:none;"></div>
         <div class="status-message" style="display:none;"></div>
-        <form method="post" action="{% url view_author author.id %}">
+        <form method="post" action="{% url 'view_author' author.id %}">
             {% csrf_token %}
             {{form.website.label_tag}}: {{ form.website }}
             <input type="submit" value="save" class="status-save" />

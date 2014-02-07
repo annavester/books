@@ -5,7 +5,7 @@
     {% endfor %} 
 {% endblock %}
 {% block content %}
-<div class="breadcrumb"><a href="{% url books %}">back to book listing</a></div>
+<div class="breadcrumb"><a href="{% url 'books' %}">back to book listing</a></div>
 <h1>{{book.title}}</h1>
 <article class="{% ifequal book.status.name 'Already Read' %} already-read{% endifequal%} 
     {% ifequal book.status.name 'Have Not Read' %} have-not-read{% endifequal%} 
@@ -13,31 +13,31 @@
     <img src="/static/images/book_thumbs/{{book.filename}}" alt="{{book.title}}" />
     <aside class="fl">
         {% if user.is_authenticated %}
-        <a class="delete" href="{% url delete_book book.id %}">x</a>
+        <a class="delete" href="{% url 'delete_book' book.id %}">x</a>
         {% endif %}
         <p><strong>Author(s):</strong> 
         {% for author in book.authors.all%}
-            <a href="{% url view_author author.id %}">{{author.first_name}} {{author.last_name}}</a>
+            <a href="{% url 'view_author' author.id %}">{{author.first_name}} {{author.last_name}}</a>
         {% endfor %}</p>
         <p><strong>ISBN:</strong> {{book.isbn}}</p>
         {% if book.readinglist.get %} 
             {% for rl in book.readinglist.all %}
-                <p><strong>Reading List:</strong> <a href="{% url view_reading_list rl.id %}">{{ rl.name }}</a></p>
+                <p><strong>Reading List:</strong> <a href="{% url 'view_reading_list' rl.id %}">{{ rl.name }}</a></p>
             {% endfor %}
         {% endif %}
         {% if user.is_authenticated %}
-            <p><a href="{% url view_book book.id %}" class=" btn aAddToList">add to a list</a></p>
+            <p><a href="{% url 'view_book' book.id %}" class=" btn aAddToList">add to a list</a></p>
         {% endif %}
         <p><strong>Category:</strong> {{book.category}}</p>
         <p><strong>Pages:</strong> {{book.pages}}</p>
         <p><strong>Editorial:</strong> {{book.editorial}}</p>
         <p><strong>Own:</strong> {% if book.own %} Yes {% else %} No {% endif %}
         {% if user.is_authenticated %}
-            <a href="{% url view_book book.id %}" class="aUpdateOwn">update</a>
+            <a href="{% url 'view_book' book.id %}" class="aUpdateOwn">update</a>
         {% endif %}</p>
         <p><strong>Status:</strong> {{book.status.name}} 
         {% if user.is_authenticated %}
-            <a href="{% url view_book book.id %}" class="btn aUpdateStatus">update</a>
+            <a href="{% url 'view_book' book.id %}" class="btn aUpdateStatus">update</a>
         {% endif %}</p>
         {% ifequal book.status.name "Already Read" %} 
             <p><strong>Rating:</strong> {{book.rating}}</p>

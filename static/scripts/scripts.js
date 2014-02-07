@@ -266,6 +266,27 @@ var Book = {
     }
 };
 
+var AVB = AVB || {};
+AVB.endless_on_scroll_margin = 20;
+
+AVB.init_tooltip = function(){
+	if (!$('.tooltip').length) {
+		return;
+	}
+
+	$('.tooltip').hover(
+		function() {
+			if($('aside', this)) {
+				$('aside', this).show();
+			}
+		},
+		function() {
+			$('aside', this).hide();
+		}
+	);
+};
+
+
 function search_submit() {
     var query = $('#id_query').val();
     $('#search-results').load(
@@ -283,23 +304,6 @@ function findTallest(element) {
         }
     });
     return tallest;
-}
-
-function init_tooltip() {
-    if(!$('.tooltip').length) {
-        return;
-    }
-    
-    $('.tooltip').hover(
-        function() {
-            if($('aside', this)) {
-                $('aside', this).show();
-            }                
-        },
-        function() {
-            $('aside', this).hide();
-        }
-    )
 }
 
 (function($,sr){

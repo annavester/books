@@ -3,7 +3,7 @@
         <h1 class="status-title">Update Status</h1>
         <div class="status-loading" style="display:none;"></div>
         <div class="status-message" style="display:none;"></div>
-        <form method="post" action="{% url view_book book.id %}">
+        <form method="post" action="{% url 'view_book' book.id %}">
             {% csrf_token %}
             {{form.status.label_tag}}: {{ form.status }}
             <div class="divHaveRead" style="display:none;">       

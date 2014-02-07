@@ -3,7 +3,7 @@
         <h1 class="status-title">Add to a Reading List</h1>
         <div class="status-loading" style="display:none;"></div>
         <div class="status-message" style="display:none;"></div>
-        <form method="post" action="{% url view_book book.id %}">
+        <form method="post" action="{% url 'view_book' book.id %}">
             {% csrf_token %}
             {{form.readlinglist.label_tag}}: {{ form.readinglist }}
             <input type="submit" value="save" class="status-save" />

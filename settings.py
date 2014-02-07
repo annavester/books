@@ -9,8 +9,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'django.db.backends.mysql'
-DATABASE_HOST = '127.0.0.1'
+DATABASES = {
+    'default': {
+        'ENGINE':'django.db.backends.mysql',
+        'HOST': '127.0.0.1',
+    }
+}
 
 TIME_ZONE = 'America/Chicago'
 LANGUAGE_CODE = 'en-us'
