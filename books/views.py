@@ -84,8 +84,9 @@ def view_book(request, book_id, extra_context=None, template_name='book.html'):
                 b.save()
 
     vars = RequestContext(request, {
-        'book':book, 
-        'reading_list':reading_lists})
+        'book': book,
+        'reading_list': reading_lists,
+        'title': book.title })
 
     return render_to_response(template_name, vars)
 

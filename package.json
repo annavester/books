@@ -1,0 +1,25 @@
+{
+  "name": "books",
+  "version": "0.0.0",
+  "description": "Anna Vester's books",
+  "main": "books.js",
+  "dependencies": {
+    "grunt": "~0.4.2"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.8.0"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://annavester@github.com/annavester/books.git"
+  },
+  "keywords": [
+    "books"
+  ],
+  "author": "Anna Vester",
+  "license": "BSD",
+  "readmeFilename": "README"
+}

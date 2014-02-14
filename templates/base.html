@@ -20,9 +20,10 @@
             <script src="/static/scripts/selectivizr-min.js"></script>
         <![endif]-->
 
-        <link href="/static/s.css" rel="stylesheet" type="text/css" />      
-        <link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css' />  
-        <script src="/static/scripts/jquery-2.1.0.min.js"></script>
+        <link href="/static/css/s.css" rel="stylesheet" type="text/css" />
+        <link href="/static/css/blitzer/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css" />
+        <link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css' />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
         <script type="text/javascript">
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-12515472-3']);
@@ -65,21 +66,8 @@
         <footer>
             <p>design and development by <a href="http://annavester.com">Anna Vester</a></p>
         </footer>
-        
-        <script src="/static/scripts/jquery.simplemodal.1.4.1.min.js"></script>        
-        <script src="/static/scripts/scripts.js"></script>
-        <script>
-            $(document).ready(function() {               
-                $('#search-form').submit(function() {
-                    search_submit();
-                });
-                $('#search-results .modal-close').click(function() {
-                    $(this).next().empty();
-                    $(this).parent().hide();
-                    return false;
-                }); 
-            });
-        </script>
+        <div id="dialog"></div>
+        <script data-main="static/js/books.min" src="static/js/require.js"></script>
         {% block external %} {% endblock %}
     </body>
 </html>

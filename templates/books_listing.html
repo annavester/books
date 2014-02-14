@@ -1,14 +1,14 @@
 {% load endless %}
 {% paginate 42 books %}
 {% for book in books %}
-    <article class="tooltip book 
+    <article data-book-id="{{book.id}}" class="tooltip book
     {% ifequal book.status.name 'Already Read' %} already-read{% endifequal%} 
     {% ifequal book.status.name 'Have Not Read' %} have-not-read{% endifequal%} 
     {% ifequal book.status.name 'Reading Now' %} reading-now{% endifequal%}">
     <a href="{% url 'view_book' book.id %}" title="{{book.title}}" class="first"><img src="/static/images/book_thumbs/{{book.filename}}" alt="{{book.title}}" /></a>
     <aside>
         {% if user.is_authenticated %}
-            <a class="delete" href="{% url 'delete_book' book.id %}">x</a>
+            <a class="delete ui-icon ui-icon-trash" href="{% url 'delete_book' book.id %}"></a>
         {% endif %}
         <p><strong>Book Title:</strong> {{book.title}} by 
         {% for author in book.authors.all%}

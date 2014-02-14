@@ -1,8 +1,5 @@
 {% extends "base.html" %}
 {% block pagetitle %} Add new Book :: {% endblock %}
-{% block extra_styles %}
-	<link href="/static/css/smoothness/jquery-ui-1.8.18.custom.css" rel="stylesheet" type="text/css" />
-{% endblock %}
 
 {% block content %}
 <h2>Add a new Book</h2>
@@ -18,7 +15,6 @@
 </form>
 {% endblock %}
 {% block external %}
-	<script src="/static/scripts/jquery-ui-1.8.18.custom.min.js"></script>
 	<script>
 		$(function() {
 			$('#id_datefinished').datepicker({ dateFormat: 'yy-mm-dd' });
