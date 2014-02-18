@@ -12,6 +12,7 @@ from books_app.readinglists.models import ReadingList
 from django.utils import simplejson
 from django.utils.simplejson import JSONEncoder
 import os
+import json
 #from pyaws import ecs
 #import settings
 from endless_pagination.decorators import page_template
@@ -120,8 +121,10 @@ def save_book(request, template_name='books/add_book.html'):
 @login_required
 def delete_book(request, book_id):
     b = Book.objects.get(id=int(book_id))
-    b.delete();
-    return HttpResponseRedirect('/')
+    b.delete()
+    data = {}
+    data['id'] = book_id;
+    return HttpResponse(json.dumps(data), content_type = "application/json")
           
 @login_required
 def update_status(request, book_id, template_name='books/update_status.html'):    

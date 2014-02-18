@@ -1,5 +1,5 @@
 {% load endless %}
-{% paginate 42 books %}
+{% paginate 40 books %}
 {% for book in books %}
     <article data-book-id="{{book.id}}" class="tooltip book
     {% ifequal book.status.name 'Already Read' %} already-read{% endifequal%} 

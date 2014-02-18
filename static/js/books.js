@@ -63,6 +63,11 @@ require(["jquery", "jquery-ui"], function($) {
         return false;
       }
 
+      if ($(e.target).hasClass("ui-icon-trash")) {
+        AVB.deleteBook(id);
+        return false;
+      }
+
       title = $this.find("> a").prop("title");
       $.get("/book/"+id+"/", function(data) {
         AVB.openDialog(data, $.extend(AVB.dialogOptions, { title: title }));
@@ -79,6 +84,23 @@ require(["jquery", "jquery-ui"], function($) {
       }
     };
     $.get("/book/"+id+"/update_status", function(data) {
+      AVB.openDialog(data, $.extend(AVB.dialogOptions, options));
+    });
+  };
+
+  AVB.deleteBook = function(id) {
+    var options = {
+      title: "Delete Book",
+      open: function() {
+        $("#dialog").data()["ui-dialog"].element.append("Book has been deleted");
+        $("body").find("[data-book-id='" + options.bookId + "']").fadeOut("slow").remove();
+        setTimeout(function() {
+          $('#dialog').data()["ui-dialog"].close();
+        }, 1000);
+      }
+    };
+    $.get("/book/"+id+"/delete", function(data) {
+      options.bookId = data.id;
       AVB.openDialog(data, $.extend(AVB.dialogOptions, options));
     });
   };
