@@ -74,6 +74,13 @@ require(["jquery", "jquery-ui"], function($) {
       });
       return false;
     });
+
+    $("#login").on("click", function(e) {
+      e.preventDefault();
+      $.get("/login", function(data) {
+        AVB.openDialog(data, $.extend(AVB.dialogOptions, { title: "Login", width: 160 }));
+      });
+    });
   };
 
   AVB.updateStatus = function(id) {

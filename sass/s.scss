@@ -142,12 +142,10 @@ article {
   aside { width: 460px; margin: 0; }
 }
 
-form {margin-top:15px;
-  p{clear:left;padding:5px 0;}
-  label{font-weight:600;font-size:14px;display:block;float:left;width:200px;}
-  input[type="submit"]{border:1px solid #ccc;border-radius:5px;margin:10px 0 0 200px;text-transform:uppercase;
-    padding:3px 15px;@include background-image(linear-gradient(white, #cccccc, #aaaaaa)); }
-  }
+form {
+  p{padding:5px 0;}
+  label{ font-size:14px; display:block; line-height: 20px;}
+}
 
 /* Container */
 #status-container {position: relative;height: 360px;width: 600px;color: #bbb;background-color: #efefef;
