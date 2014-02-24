@@ -81,6 +81,13 @@ require(["jquery", "jquery-ui"], function($) {
         AVB.openDialog(data, $.extend(AVB.dialogOptions, { title: "Login", width: 160 }));
       });
     });
+
+    $('#addAuthor').on("click", function(e) {
+      e.preventDefault();
+      $.get("/author/add", function(data) {
+         AVB.openDialog(data, $.extend(AVB.dialogOptions, { title: "Add New Author", width: 300 }));
+      });
+    });
   };
 
   AVB.updateStatus = function(id) {

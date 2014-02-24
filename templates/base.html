@@ -46,10 +46,12 @@
                         <li><a href="/">Home</a></li>
                         <li><a href="/authors">Authors</a></li>
                         {% if user.is_authenticated %}
-                            <li><a href="/author/add">Add Author</a></li>
-                            <li><a href="/book/add">Add Book</a></li>
+                            <li><a id="addAuthor" href="/author/add">Add Author</a></li>
+                            <li><a id="addBook" href="/book/add">Add Book</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                        {% else %}
+                            <li><a id="login" href="/login">Login</a></li>
                         {% endif %}
-                        <li><a id="login" href="/login">Login</a></li>
                     </ul>
                     <a href="/" class="tagline">My Books</a>
                 </nav>
