@@ -109,13 +109,13 @@ article.reading-now img {border-color: $yellow; }
   article.book:nth-child(7n+7) {margin-right: 0; } 
   }
 
-.author_books{ @extend .w960;
-  aside{width:410px;margin:0 20px 0 0;}
-  section{float:left;width:530px;
-    h2{margin-bottom:10px;}
-  } 
-  article.book:nth-child(5n+5) {margin-right: 0; } 
+#dialog .authorBooks {
+  aside { width:270px;margin:0 0 0 20px;}
+  section{ float:left; max-width:376px;
+    .book{ padding: 0; }
   }
+  article.book:nth-child(5n+5) {margin-right: 0; } 
+}
 
 article {
   &.book { display:inline-block;margin: 0 0 5px 0;padding: 0;position: relative;width: 91px; height:146px;}

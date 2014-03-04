@@ -6,7 +6,7 @@
 	<aside>
 		<p><strong>Book Title:</strong> {{book.title}} by 
 		{% for author in book.authors.all%}
-			<a href="{% url 'view_author' author.id %}">{{author.first_name}} {{author.last_name}}</a>
+			<a class="author-link" href="{% url 'view_author' author.id %}">{{author.first_name}} {{author.last_name}}</a>
 		{% endfor %}</p>
 		<p><strong>ISBN:</strong> {{book.isbn}}</p>
 		{% if book.readinglist.get %} 

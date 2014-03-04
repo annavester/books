@@ -57,14 +57,21 @@ require(["jquery", "jquery-ui"], function($) {
     });
 
     $("body").on("click", "article.book", function(e) {
-      var $this = $(this), id = $this.data("book-id") || $this.parents("article").data("book-id"), title = "";
-      if ($(e.target).hasClass("aUpdateStatus")) {
+      var $this = $(this), id = $this.data("book-id") || $this.parents("article").data("book-id"), title = "",
+          $me = $(e.target);
+
+      if ($me.hasClass("aUpdateStatus")) {
         AVB.updateStatus(id);
         return false;
       }
 
-      if ($(e.target).hasClass("ui-icon-trash")) {
+      if ($me.hasClass("ui-icon-trash")) {
         AVB.deleteBook(id);
+        return false;
+      }
+
+      if ($me.hasClass("author-link")) {
+        AVB.showAuthor($me.prop("href"));
         return false;
       }
 
@@ -115,6 +122,21 @@ require(["jquery", "jquery-ui"], function($) {
     };
     $.get("/book/"+id+"/delete", function(data) {
       options.bookId = data.id;
+      AVB.openDialog(data, $.extend(AVB.dialogOptions, options));
+    });
+  };
+
+  AVB.showAuthor = function(url) {
+    var options = {
+      title: "Author",
+      open: function() {
+        var $this = $(this);
+        $this.data()["ui-dialog"].uiDialogTitlebar.find(".ui-dialog-title")
+          .text($this.find(".authorBooks").data("author"));
+      }
+    };
+
+    $.get(url, function(data) {
       AVB.openDialog(data, $.extend(AVB.dialogOptions, options));
     });
   };
