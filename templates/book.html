@@ -1,4 +1,4 @@
-<article class="{% ifequal book.status.name 'Already Read' %} already-read{% endifequal%}
+<article class="book book-dialog {% ifequal book.status.name 'Already Read' %}already-read{% endifequal%}
     {% ifequal book.status.name 'Have Not Read' %} have-not-read{% endifequal%} 
     {% ifequal book.status.name 'Reading Now' %} reading-now{% endifequal%}" data-book-id="{{book.id}}">
     {% if user.is_authenticated %}

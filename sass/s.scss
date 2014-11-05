@@ -109,7 +109,7 @@ article.reading-now img {border-color: $yellow; }
   article.book:nth-child(7n+7) {margin-right: 0; } 
   }
 
-#dialog .authorBooks {
+.ui-dialog-content .authorBooks {
   aside { width:270px;margin:0 0 0 20px;}
   section{ float:left; max-width:376px;
     .book{ padding: 0; }
@@ -124,9 +124,11 @@ article {
 article {
   img { border-top:5px solid #fff; }
   &.book {
-    .review {display: none; }
+    .review { display: none; }
     aside {float: none;display: none;padding: 10px 5px;width: 250px;position: absolute;top: 35px;left:-169px;
       background: #fff;z-index:40;border-top:10px solid #fff; }
+    &.book-dialog aside { display: block; position: relative; margin-left: 105px; width:570px; padding: 0;
+      border:0; left:0; top:0; }
     a { display: inline-block; padding-top: 5px; }
     a.first {
       &:hover {background: none; }
@@ -136,11 +138,13 @@ article {
     } 
   }
 
-#dialog article { padding: 15px 10px;
+.ui-dialog-content article { padding: 15px 10px;
+  &.book { padding: 0; }
   .ui-icon { float: right; }
   img { width: 160px; float: left; margin-right: 15px; }
   aside { width: 460px; margin: 0; }
 }
+
 
 form {
   p{padding:5px 0;}

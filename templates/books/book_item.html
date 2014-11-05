@@ -1,7 +1,7 @@
 <article class="tooltip book 
     {% ifequal book.status.name 'Already Read' %} already-read{% endifequal%} 
     {% ifequal book.status.name 'Have Not Read' %} have-not-read{% endifequal%} 
-    {% ifequal book.status.name 'Reading Now' %} reading-now{% endifequal%}">
+    {% ifequal book.status.name 'Reading Now' %} reading-now{% endifequal%}" data-book-id="{{book.id}}">
   	<a href="{% url 'view_book' book.id %}" title="{{book.title}}" class="first"><img src="/static/images/book_thumbs/{{book.filename}}" alt="{{book.title}}" /></a>
 	<aside>
 		<p><strong>Book Title:</strong> {{book.title}} by 
