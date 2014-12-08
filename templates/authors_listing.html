@@ -4,6 +4,6 @@
     <h1>Authors</h1>
     
     {% for author in authors %}
-  		<a href="{% url 'view_author' author.id %}">{{author.first_name}} {{author.last_name}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  		<a class="author-link" href="{% url 'view_author' author.id %}">{{author.first_name}} {{author.last_name}}</a>
 	{% endfor %}
 {% endblock %}

@@ -9,7 +9,6 @@ require(["jquery", "jquery-ui"], function($) {
     beforeClose: function() {
       $(this).empty();
     }
-
   };
 
   AVB.initTooltip = function() {
@@ -50,8 +49,8 @@ require(["jquery", "jquery-ui"], function($) {
     $(window).scroll(function(){
       var $win = $(window);
       if ($(document).height() - $win.height() - $win.scrollTop() <= margin) {
-        $("body").trigger("endless");
-        $(".tooltip").off("hover");
+        $("body.homepage").trigger("endless");
+        $(".homepage .tooltip").off("hover");
         AVB.initTooltip();
       }
     });
@@ -66,7 +65,7 @@ require(["jquery", "jquery-ui"], function($) {
       }
 
       if ($me.hasClass("ui-icon-trash")) {
-        AVB.deleteBook(id);
+        AVB.deleteBook(id, ($me.parents(".ui-dialog-content").length > 0));
         return false;
       }
 
@@ -77,8 +76,18 @@ require(["jquery", "jquery-ui"], function($) {
 
       title = $this.find("> a").prop("title");
       $.get("/book/"+id+"/", function(data) {
+
+        if (typeof AVB.dialogOptions.open === "function") {
+          delete AVB.dialogOptions.open;
+        }
         AVB.openDialog(data, $.extend(AVB.dialogOptions, { title: title }));
       });
+      return false;
+    });
+
+    $(".author-link").on("click", function(e) {
+      var $me = $(e.target);
+      AVB.showAuthor($me.prop("href"));
       return false;
     });
 
@@ -109,19 +118,26 @@ require(["jquery", "jquery-ui"], function($) {
     });
   };
 
-  AVB.deleteBook = function(id) {
-    var options = {
-      title: "Delete Book",
-      open: function() {
-        $("#dialog").data()["ui-dialog"].element.append("Book has been deleted");
-        $("body").find("[data-book-id='" + options.bookId + "']").fadeOut("slow").remove();
-        setTimeout(function() {
-          $('#dialog').data()["ui-dialog"].close();
-        }, 1000);
-      }
-    };
+  AVB.deleteBook = function(id, isInDialog) {
+    if (isInDialog) {
+      $("#dialog").data()["ui-dialog"].close();
+    }
     $.get("/book/"+id+"/delete", function(data) {
-      options.bookId = data.id;
+      var options = {
+        title: "Delete Book",
+        open: function() {
+          var $this = $(this);
+          $this.data()["ui-dialog"].element.append("Book has been deleted");
+          $("body").find("[data-book-id='" + data.id + "']").fadeOut("slow").remove();
+          setTimeout(function() {
+            $this.data()["ui-dialog"].close();
+          }, 1000);
+        },
+        bookId: data.id
+      };
+      if (typeof AVB.dialogOptions.open === "function") {
+        delete AVB.dialogOptions.open;
+      }
       AVB.openDialog(data, $.extend(AVB.dialogOptions, options));
     });
   };

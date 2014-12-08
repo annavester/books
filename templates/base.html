@@ -38,7 +38,7 @@
         </script>
         {% block extra_styles %} {% endblock %}
     </head>
-    <body id="home">
+    <body id="home" class="{% block pagetype %}{% endblock %}">
         <div id="page"> 
             <header>
                 <nav>
@@ -69,7 +69,19 @@
             <p>design and development by <a href="http://annavester.com">Anna Vester</a></p>
         </footer>
         <div id="dialog"></div>
-        <script data-main="static/js/books" src="static/js/require.js"></script>
+        <script data-main="/static/js/books" src="/static/js/require.js"></script>
+        <script>
+            require.config({
+                baseUrl: '/static/js/',
+                paths: {
+                    'jquery': 'jquery',
+                    'jquery-ui': 'jquery-ui',
+                    'dc': 'dc',
+                    'cf': 'crossfilter.min',
+                    'd3': 'd3.min'
+                }
+            })
+        </script>
         {% block external %} {% endblock %}
     </body>
 </html>
