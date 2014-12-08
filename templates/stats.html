@@ -30,7 +30,7 @@
             chart
                 .width(400)
                 .height(180)
-                .x(d3.scale.linear().domain([2004,2014]))
+                .x(d3.scale.linear().domain([2003,2015]))
                 .dimension(years)
                 .group(count)
                 .title(function(d) { return d.data.key + ": " + d.data.value; })
@@ -41,7 +41,7 @@
                         console.log("click!", d);
                     });
                 })
-                .xAxis().tickFormat(d3.format("d"));
+                .xAxis().ticks(5).tickFormat(d3.format("d"));
 
             chart.render();
         })
