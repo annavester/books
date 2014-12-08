@@ -1,7 +1,8 @@
-require(["jquery", "jquery-ui"], function($) {
+require(["jquery", "jquery-ui", "jquery-validate"], function($) {
   "use strict";
 
   var AVB = AVB || {};
+  window.AVB = AVB;
   AVB.endlessMargin = 20;
   AVB.dialogOptions = {
     width: 700,
@@ -102,6 +103,36 @@ require(["jquery", "jquery-ui"], function($) {
       e.preventDefault();
       $.get("/author/add", function(data) {
          AVB.openDialog(data, $.extend(AVB.dialogOptions, { title: "Add New Author", width: 300 }));
+      });
+    });
+
+    $("#addBook").on("click", function(e) {
+      e.preventDefault();
+      $.get("/book/add", function(data) {
+        var options = {
+          title: "Add New Book",
+          width: 300,
+          open: function() {
+            $('#id_datefinished').datepicker({ dateFormat: 'yy-mm-dd' });
+
+            $('#id_isbn').blur(function(){
+              var isbn = $(this).val();
+              var url = "https://www.googleapis.com/books/v1/volumes?callback=?&q="
+              $.getJSON(url + isbn, function(response){
+                var item = response.items[0];
+                $('#id_title').val(item.volumeInfo.title);
+                $('#id_pages').val(item.volumeInfo.pageCount);
+                $('#id_amazon_link').val(item.volumeInfo.infoLink);
+                $('#id_editorial').val(item.volumeInfo.description);
+              });
+            });
+
+            $(this).find("form").validate({
+              rules: AVB.addBookFormRules
+            });
+          }
+        };
+        AVB.openDialog(data, $.extend(AVB.dialogOptions, options));
       });
     });
   };
