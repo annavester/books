@@ -9,8 +9,7 @@ from models import Book,Category
 from forms import BookSaveForm, SearchBooksForm, BookUpdateStatusForm, BookUpdateOwnForm, BookAddToListForm
 from books_app.authors.models import Author
 from books_app.readinglists.models import ReadingList
-from django.utils import simplejson
-from django.utils.simplejson import JSONEncoder
+from django.db.models import Count
 import os
 import json
 #from pyaws import ecs
@@ -36,15 +35,16 @@ def book_listing(request, status_id=None, extra_context=None, template='home.htm
         context.update(extra_context)
     return render_to_response(template, context, context_instance=RequestContext(request))
 
+def convertDateToString(o):
+    DATE_FORMAT = "%Y"
+    return o.strftime(DATE_FORMAT)
+
 def book_stats(request, year=None, extra_context=None, template='stats.html'):
+    context = {}
     if year is not None:
         context = {
             'year': year,
             'book_count': Book.objects.filter(datefinished__year=year).count(),
-        }
-    else:
-        context = {
-
         }
 
     if extra_context is not None:
@@ -52,6 +52,18 @@ def book_stats(request, year=None, extra_context=None, template='stats.html'):
 
     return render_to_response(template, context, context_instance=RequestContext(request))
 
+def book_charts(request):
+    years = Book.objects.dates('datefinished','year')
+    chart_data = []
+    record = {}
+
+    for y in years:
+        if y is not None:
+            year_string = convertDateToString(y)
+            book_count = Book.objects.filter(datefinished__year=year_string).count()
+            chart_data.append(dict(year=year_string, count=book_count))
+
+    return HttpResponse(json.JSONEncoder().encode(list(chart_data)), mimetype="application/json")
 
 def view_book(request, book_id, extra_context=None, template_name='book.html'):
     book = get_object_or_404(Book, id=book_id)
@@ -93,11 +105,11 @@ def view_book(request, book_id, extra_context=None, template_name='book.html'):
 
 def get_latest_read(request, count):
     books = Book.objects.select_related().filter(status=1).values('id','filename').order_by("-datefinished")[:count]    
-    return HttpResponse(simplejson.JSONEncoder().encode(list(books)), mimetype="application/json")
+    return HttpResponse(json.JSONEncoder().encode(list(books)), mimetype="application/json")
 
 def get_reading_now(request, count):
     books = Book.objects.select_related().filter(status=3).values('id','filename').order_by("-lastupdated")[:count]    
-    return HttpResponse(simplejson.JSONEncoder().encode(list(books)), mimetype="application/json")
+    return HttpResponse(json.JSONEncoder().encode(list(books)), mimetype="application/json")
     
 @login_required
 def save_book(request, template_name='books/add_book.html'):
