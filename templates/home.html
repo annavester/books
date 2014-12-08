@@ -17,7 +17,7 @@
 	                Already Read: <a href="{% url 'books_by_status' 1 %}">{{read_books}}</a><br />
 	                Have Not Read: <a href="{% url 'books_by_status' 2 %}">{{havenotread_books}}</a><br />
 	                Reading Now: <a href="{% url 'books_by_status' 3 %}">{{readingnow_books}}</a><br />
-                    <!-- <a href="{% url 'view_stats' %}">more stats</a>     -->
+                    Stats and Charts: <a href="{% url 'view_stats' %}">here</a>
 	            </p>
             {% endif %}
         </aside>

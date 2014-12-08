@@ -20,54 +20,28 @@
     <script>
         var chart = dc.barChart("#chart");
         d3.json("/chart-data", function(error, experiments) {
-            var ndx                 = crossfilter(experiments);
-            var    years        = ndx.dimension(function(d) { return d.year; });
-            var    count       = years.group().reduce(
+            var ndx = crossfilter(experiments);
+            var years = ndx.dimension(function(d) { return d.year; });
+            var count = years.group().reduce(
                 function(ind, d) { return d.count; },
                 function(ind, d) { return d.count; },
                 function(ind, d) { return 0; });
 
             chart
-                    .width(360)
-                    .height(180)
-                    .x(d3.scale.linear().domain([2004,2014]))
-                    .dimension(years)
-                    .group(count)
-                    .valueAccessor(function(d) {
-                        return d.value;
-                    })
-                    .renderlet(function(chart) {
-                        chart.selectAll('rect').on("click", function(d) {
-                            console.log("click!", d);
-                        });
-                    })
-                    .xAxis().tickFormat(d3.format("d"));
-
-            /*chart
-
-                    .width(360)
-                    .height(180)
-                    .margins({top: 40, right: 50, bottom: 30, left: 60})
-                    .dimension(years)
-                    .group(crimeIncidentByYear, "Non-Violent Crime")
-                    .valueAccessor(function(d) {
-                        return d.value.nonViolentCrimeAvg;
-                    })
-                    .stack(crimeIncidentByYear, "Violent Crime", function(d){return d.value.violentCrimeAvg;})
-                    .x(d3.scale.linear().domain([1997, 2012]))
-                    .renderHorizontalGridLines(true)
-                    .centerBar(true)
-                    .elasticY(true)
-                    .brushOn(false)
-                    .legend(dc.legend().x(250).y(10))
-                    .title(function(d){
-                        return d.key
-                                + "\nViolent crime per 100k population: " + Math.round(d.value.violentCrimeAvg)
-                                + "\nNon-Violent crime per 100k population: " + Math.round(d.value.nonViolentCrimeAvg);
-                    })
-                    .xAxis().ticks(5).tickFormat(d3.format("d"));
-             */
-
+                .width(400)
+                .height(180)
+                .x(d3.scale.linear().domain([2004,2014]))
+                .dimension(years)
+                .group(count)
+                .title(function(d) { return d.data.key + ": " + d.data.value; })
+                .renderTitle(true)
+                .brushOn(false)
+                .renderlet(function(chart) {
+                    chart.selectAll('rect').on("click", function(d) {
+                        console.log("click!", d);
+                    });
+                })
+                .xAxis().tickFormat(d3.format("d"));
 
             chart.render();
         })
