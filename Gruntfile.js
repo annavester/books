@@ -10,7 +10,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      indeividualFiles: ["Gruntfile.js", "static/js/books.js"],
+      individualFiles: ["Gruntfile.js", "static/js/books.js"],
       options: {
         jshintrc: ".jshintrc"
       }

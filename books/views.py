@@ -9,12 +9,9 @@ from models import Book,Category
 from forms import BookSaveForm, SearchBooksForm, BookUpdateStatusForm, BookUpdateOwnForm, BookAddToListForm
 from books_app.authors.models import Author
 from books_app.readinglists.models import ReadingList
-from django.db.models import Count
-import os
 import json
-#from pyaws import ecs
-#import settings
 from endless_pagination.decorators import page_template
+import logging
 
 @page_template('books_listing.html')
 def book_listing(request, status_id=None, extra_context=None, template='home.html'):
@@ -54,16 +51,31 @@ def book_stats(request, year=None, extra_context=None, template='stats.html'):
 
 def book_charts(request):
     years = Book.objects.dates('datefinished','year')
-    chart_data = []
-    record = {}
+    books = Book.objects.select_related()
+    chart_data = {}
+    annual_count = []
+    records = []
 
     for y in years:
         if y is not None:
             year_string = convertDateToString(y)
             book_count = Book.objects.filter(datefinished__year=year_string).count()
-            chart_data.append(dict(year=year_string, count=book_count))
+            annual_count.append(dict(year=year_string, count=book_count))
 
-    return HttpResponse(json.JSONEncoder().encode(list(chart_data)), mimetype="application/json")
+    if annual_count:
+        chart_data["annualCount"] = annual_count
+
+    for b in books:
+        if b is not None:
+            #logging.basicConfig(filename='example.log',level=logging.DEBUG)
+            #logging.debug("test")
+            #logging.info(b.title)
+            records.append({ 'title': str(b.title), 'status': str(b.status), 'category': str(b.category), 'pages': b.pages })
+
+    if records:
+        chart_data["books"] = records
+
+    return HttpResponse(json.JSONEncoder().encode(chart_data), mimetype="application/json")
 
 def view_book(request, book_id, extra_context=None, template_name='book.html'):
     book = get_object_or_404(Book, id=book_id)
