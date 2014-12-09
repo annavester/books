@@ -61,7 +61,7 @@ require(["jquery", "jquery-ui", "jquery-validate"], function($) {
           $me = $(e.target);
 
       if ($me.hasClass("aUpdateStatus")) {
-        AVB.updateStatus(id);
+        AVB.updateStatus(id, ($me.parents(".ui-dialog-content").length > 0));
         return false;
       }
 
@@ -137,14 +137,17 @@ require(["jquery", "jquery-ui", "jquery-validate"], function($) {
     });
   };
 
-  AVB.updateStatus = function(id) {
-    var options = {
-      title: "Update Status",
-      open: function() {
-        AVB.Book.openUpdateStatus();
-      }
-    };
+  AVB.updateStatus = function(id, isInDialog) {
+    if (isInDialog) {
+      $("#dialog").data()["ui-dialog"].close();
+    }
     $.get("/book/"+id+"/update_status", function(data) {
+      var options = {
+        title: "Update Status",
+        open: function() {
+          AVB.Book.openUpdateStatus();
+        }
+      };
       AVB.openDialog(data, $.extend(AVB.dialogOptions, options));
     });
   };

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-
+{% block extra_styles %}
+    <link href="/static/css/dc.css" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block content %}
     <div class="books">   
         <h1>My Library Stats</h1>
@@ -63,16 +65,13 @@
                 annualCountPieChart.render();
 
                 annualCountLineChart
-                    .width(400)
-                    .height(180)
+                    .renderArea(false)
+                    .width(600)
+                    .height(200)
                     .x(d3.scale.linear().domain([2003,2015]))
                     .dimension(years)
                     .group(count)
-                    .title(function(d) { return d.data.key + ": " + d.data.value; })
-                    .renderTitle(true)
-                    .brushOn(false)
-                    .renderArea(false)
-                    .dotRadius(10)
+                    .renderHorizontalGridLines(true)
                     .xAxis().ticks(5).tickFormat(d3.format("d"));
 
                 annualCountLineChart.render();
