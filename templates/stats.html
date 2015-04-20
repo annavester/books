@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block extra_styles %}
     <link href="/static/css/dc.css" rel="stylesheet" type="text/css" />
+        <style>
+            h2 { clear:left;}
+        </style>
 {% endblock %}
 {% block content %}
     <div class="books">   
@@ -8,72 +11,57 @@
         {% if year %}
             <p>In {{ year }} I've finished {{ book_count }} books.</p>
         {% endif %}
+
+        <div style="float:left; width: 500px;">
+            <h2>Books read per year</h2>
+            <div>
+                <div id="annualCountRowChart"></div>
+            </div>
+
+            <h2>Pages read per year</h2>
+            <div>
+                <div id="annualCountLineChart"></div>
+            </div>
+        </div>
+
+        <div style="float:left; width: 450px;">
+
+            <h2>Book categories</h2>
+            <div>
+                <div id="categoryChart"></div>
+            </div>
+        </div>
     </div>
-
-    <div id="annualCountChart"></div>
-    <div id="annualCountPieChart"></div>
-    <div id="annualCountLineChart"></div>
-    <div id="annualCountRowChart"></div>
-
 {% endblock %}
 
 {% block external %}
-
     <script>
         require(["dc", "d3", "cf"], function(dc) {
             "use strict";
-
-            var annualCountChart = dc.barChart("#annualCountChart");
-            var annualCountPieChart = dc.pieChart("#annualCountPieChart");
             var annualCountLineChart = dc.lineChart("#annualCountLineChart");
             var annualCountRowChart = dc.rowChart("#annualCountRowChart");
+            var categoryChart = dc.rowChart("#categoryChart");
 
             d3.json("/chart-data", function(error, experiments) {
-                experiments = experiments.annualCount;
-
-                var ndx = crossfilter(experiments);
-                var years = ndx.dimension(function(d) { return d.year; });
-                var count = years.group().reduce(
-                    function(ind, d) { return d.count; },
-                    function(ind, d) { return d.count; },
-                    function(ind, d) { return 0; });
-
-                annualCountChart
-                    .width(400)
-                    .height(180)
-                    .x(d3.scale.linear().domain([2003,2015]))
-                    .dimension(years)
-                    .group(count)
-                    .title(function(d) { return d.data.key + ": " + d.data.value; })
-                    .renderTitle(true)
-                    .brushOn(false)
-                    .xAxis().ticks(5).tickFormat(d3.format("d"));
-
-                annualCountChart.render();
-
-                annualCountPieChart
-                    .width(400)
-                    .height(250)
-                    .dimension(years)
-                    .group(count)
-                    .innerRadius(20)
-                    .radius(100)
-                    .transitionDuration(1000)
-                    .title(function(d) { return d.data.key + ": " + d.data.value; })
-                    .renderTitle(true)
-
-                annualCountPieChart.render();
+                var ndx = crossfilter(experiments.books);
+                var categories = ndx.dimension(function(d) { return d.category; });
+                var years = ndx.dimension(function(d) { return new Date(d.year).getFullYear(); });
+                var categoriesCount = categories.group().reduceCount();
+                var booksPerYear = years.group().reduceCount();
+                var pagesPerYear = years.group().reduceSum(function(d) { return d.pages; });
 
                 annualCountLineChart
                     .renderArea(false)
-                    .width(600)
+                    .width(500)
                     .height(200)
-                    .x(d3.scale.linear().domain([2003,2015]))
+                    .margins({top: 5, left: 50, right: 10, bottom: 20})
+                    .x(d3.time.scale().domain([2003, 2015]))
+                    .y(d3.scale.linear().domain([0, pagesPerYear.top(1)[0].value]))
                     .dimension(years)
-                    .group(count)
+                    .group(pagesPerYear)
                     .renderHorizontalGridLines(true)
+                    .brushOn(false)
                     .xAxis().ticks(5).tickFormat(d3.format("d"));
-
                 annualCountLineChart.render();
 
                 annualCountRowChart
@@ -81,11 +69,27 @@
                     .height(180)
                     .margins({top: 5, left: 10, right: 10, bottom: 20})
                     .dimension(years)
-                    .group(count)
+                    .group(booksPerYear)
                     .renderTitle(true)
+                    .labelOffsetY(10)
                     .xAxis().ticks(5).tickFormat(d3.format("d"));
-
                 annualCountRowChart.render();
+
+                categoryChart
+                    .width(400)
+                    .height(400)
+                    .dimension(categories)
+                    .group(categoriesCount)
+                    .renderTitle(true)
+                    .margins({top: 5, left: 10, right: 10, bottom: 20})
+                    .gap(5)
+                    .label(function (d) { return d.key })
+                    .title(function (d) { return d.value })
+                    .ordering(function(d) { return -d.value })
+                    .rowsCap(20)
+                    .elasticX(true)
+                    .labelOffsetY(10)
+                categoryChart.render();
             });
         });
     </script>

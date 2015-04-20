@@ -66,11 +66,11 @@ def book_charts(request):
         chart_data["annualCount"] = annual_count
 
     for b in books:
-        if b is not None:
+        if b is not None and str(b.status) == "Already Read":
             #logging.basicConfig(filename='example.log',level=logging.DEBUG)
             #logging.debug("test")
             #logging.info(b.title)
-            records.append({ 'title': str(b.title), 'status': str(b.status), 'category': str(b.category), 'pages': b.pages })
+            records.append({ 'title': str(b.title), 'status': str(b.status), 'category': str(b.category), 'pages': b.pages, 'year': str(b.datefinished) })
 
     if records:
         chart_data["books"] = records
