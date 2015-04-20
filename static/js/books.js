@@ -113,6 +113,7 @@ require(["jquery", "jquery-ui", "jquery-validate"], function($) {
           title: "Add New Book",
           width: 300,
           open: function() {
+            var $form = $(this).find("form");
             $('#id_datefinished').datepicker({ dateFormat: 'yy-mm-dd' });
 
             $('#id_isbn').blur(function(){
@@ -127,8 +128,12 @@ require(["jquery", "jquery-ui", "jquery-validate"], function($) {
               });
             });
 
-            $(this).find("form").validate({
+            $form.validate({
               rules: AVB.addBookFormRules
+            });
+
+            $(this).find(".status-save").on("click", function() {
+                $form.submit();
             });
           }
         };
