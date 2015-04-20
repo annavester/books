@@ -17,12 +17,12 @@ import logging
 def book_listing(request, status_id=None, extra_context=None, template='home.html'):
     if status_id is not None:
         context = {
-            'books': Book.objects.select_related().filter(status=status_id),
+            'books': Book.objects.select_related().filter(status=status_id).order_by('-datefinished', '-lastupdated'),
         }
     else:
         context = {
             'listing':True,       
-            'read_books':Book.objects.select_related().filter(status=1).count(),        
+            'read_books':Book.objects.select_related().filter(status=1).count(),
             'havenotread_books':Book.objects.select_related().filter(status=2).count(),
             'readingnow_books':Book.objects.select_related().filter(status=3).count(),
             'books': Book.objects.select_related().all().order_by('-lastupdated'),
