@@ -132,7 +132,7 @@ require(["jquery", "jquery-ui", "jquery-validate"], function($) {
               rules: AVB.addBookFormRules
             });
 
-            $(this).find(".status-save").on("click", function() {
+            $(this).find(".btn-add-book").on("click", function() {
                 $form.submit();
             });
           }
