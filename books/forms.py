@@ -64,7 +64,7 @@ class SearchBooksForm(forms.Form):
     query = forms.CharField(label=u'Enter a keyword to search for',widget=forms.TextInput(attrs={'size':32}))
     
 class BookUpdateStatusForm(forms.Form):
-    status = forms.ModelChoiceField(label='Status',queryset=Status.objects.all().order_by('name'), empty_label='--')
+    status = forms.ModelChoiceField(label='Status',queryset=Status.objects.all().order_by('name'))
     rating = forms.ChoiceField(label='Rating',choices=RATING_CHOICES)
     review = forms.CharField(label='Review',required=False)
     datefinished = forms.DateField(label='Date Finished',required=False)

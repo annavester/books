@@ -141,11 +141,27 @@ require(["jquery", "jquery-ui", "jquery-validate"], function($) {
     if (isInDialog) {
       $("#dialog").data()["ui-dialog"].close();
     }
+
     $.get("/book/"+id+"/update_status", function(data) {
       var options = {
         title: "Update Status",
         open: function() {
           AVB.Book.openUpdateStatus();
+          var $form = $(this).find("form");
+          $(this).find(".status-save").on("click", function() {
+            $.ajax({
+              url: $form.prop("action"),
+              data: $form.serialize(),
+              type: "post",
+              cache: false,
+              dataType: "html",
+              success: function () {
+                $("#dialog").data()["ui-dialog"].close();
+                window.location = "/";
+              },
+              error: AVB.Book.error
+            });
+          });
         }
       };
       AVB.openDialog(data, $.extend(AVB.dialogOptions, options));
@@ -241,62 +257,8 @@ require(["jquery", "jquery-ui", "jquery-validate"], function($) {
       });
     },
 
-    show: function (id) {
-      $("#status-container .status-save").click(function (e) {
-        e.preventDefault();
-        var msg = "", actionUrl = "";
-        // validate form
-        if (AVB.Book.validate()) {
-          msg = $("#status-container .status-message");
-          msg.fadeOut( function () {
-            msg.removeClass("status-error").empty();
-          });
-          $("#status-container .status-title").text("Sending...");
-          $("#status-container form").fadeOut(200);
-          $("#status-container .status-content").animate({
-            height: "80px"
-          }, function () {
-            $("#status-container .status-loading").fadeIn(200, function () {
-              if (AVB.Book.objType === "author") {
-                actionUrl = "/author/"+id+"/";
-              } else {
-                actionUrl = "/book/"+id+"/";
-              }
-              $.ajax({
-                url: actionUrl,
-                data: $("#status-container form").serialize() + "&action=send",
-                type: "post",
-                cache: false,
-                dataType: "html",
-                success: function () {
-                  $("#status-container .status-loading").fadeOut(200, function () {
-                    $("#status-container .status-title").text("Thank you!");
-                  });
-                },
-                error: AVB.Book.error
-              });
-            });
-          });
-        } else {
-          if ($("#status-container .status-message:visible").length > 0) {
-            msg = $("#status-container .status-message div");
-            msg.fadeOut(200, function () {
-              msg.empty();
-              AVB.Book.showError();
-              msg.fadeIn(200);
-            });
-          } else {
-            $("#status-container .status-message").animate({
-              height: "30px"
-            }, AVB.Book.showError);
-          }
-
-        }
-      });
-    },
-
     error: function (xhr) {
-      alert(xhr.statusText);
+      console.log(xhr.statusText);
     },
 
     validate: function () {

@@ -153,8 +153,8 @@ def delete_book(request, book_id):
 @login_required
 def update_status(request, book_id, template_name='books/update_status.html'):    
     book = get_object_or_404(Book, id=book_id)
-    form = BookUpdateStatusForm()  
-    vars = RequestContext(request, {'book':book, 'form':form })       
+    form = BookUpdateStatusForm()
+    vars = RequestContext(request, { 'book':book, 'form':form })
     return render_to_response(template_name, vars)
 
 @login_required
