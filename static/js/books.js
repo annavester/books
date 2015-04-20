@@ -133,20 +133,7 @@ require(["jquery", "jquery-ui", "jquery-validate"], function($) {
             });
 
             $(this).find(".btn-add-book").on("click", function() {
-              $.ajax({
-                url: $form.prop("action"),
-                data: $form.serialize(),
-                type: "post",
-                cache: false,
-                dataType: "html",
-                contentType: false,
-                processData: false,
-                success: function () {
-                  $("#dialog").data()["ui-dialog"].close();
-                  window.location = "/";
-                },
-                error: AVB.Book.error
-              });
+                $form.submit();
             });
           }
         };
