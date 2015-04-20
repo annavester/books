@@ -1,5 +1,5 @@
 <div class="add-author-container">
-    <form method="post" action="." enctype="multipart/form-data">
+    <form method="post" action="{% add_book %}" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in save_form %}
             <p class="clearfix">
