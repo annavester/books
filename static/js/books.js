@@ -139,6 +139,8 @@ require(["jquery", "jquery-ui", "jquery-validate"], function($) {
                 type: "post",
                 cache: false,
                 dataType: "html",
+                contentType: false,
+                processData: false,
                 success: function () {
                   $("#dialog").data()["ui-dialog"].close();
                   window.location = "/";
