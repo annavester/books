@@ -4,7 +4,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 PROJECT_DIR = os.path.dirname(__file__)
 ADMINS = (
-          ('Anna Vester', 'veannaa@gmail.com'),
+          ('Anna Vester', 'anna.vester@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -24,7 +24,6 @@ MEDIA_ROOT = os.path.join(PROJECT_DIR, 'static')
 UPLOAD_DIR = os.path.join(MEDIA_ROOT, 'images/book_thumbs')
 MEDIA_URL = ''
 ADMIN_MEDIA_PREFIX = '/media/'
-SECRET_KEY = '8dzc7j2^q$^(i2=x1r658oj!odfwrrt5wds&snbcyyg&8t8@&q'
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
